@@ -1,6 +1,6 @@
-# TSBench: A Benchmarking Tool for Time Series Explanation Alorithms 
+# XTSC-Bench: A Benchmarking Tool for Time Series Explanation Alorithms 
 
-TSBench is a python package to faciliate the benchmarking of explanation algorithms of Time Series Classifiers. The intention is to provide a tool to the research community to enable an easy evaluation of newly develped algorithms and therby encouraging progess in this research area. TSBench consists of synthetic data with ground truth and already trained models for a standardize evaluation, as well as metrics to measuere the performance of the evaluated Approaches. The Core Metric is thereby provided by Quantos, TSBench provides helper function as well as metric adaptions to Quantos to make the metrics useable on TSC explainers. 
+XTSC-Bench is a python package to faciliate the benchmarking of explanation algorithms of Time Series Classifiers. The intention is to provide a tool to the research community to enable an easy evaluation of newly develped algorithms and therby encouraging progess in this research area. XTSC-Bench consists of synthetic data with ground truth and already trained models for a standardize evaluation, as well as metrics to measuere the performance of the evaluated Approaches. The Core Metric is thereby provided by Quantos, XTSC-Bench provides helper function as well as metric adaptions to Quantos to make the metrics useable on TSC explainers. 
 Further, it is compatible with TSInterpret and provides therefore easy access to baselines. 
 
 
@@ -113,15 +113,21 @@ To Regenerate the Results, Explanations and Classification Models, run the numbe
 python 0_Model_Training.py
 
 # Generate the Explanations
-python 1_a_
-python 1_b_
-python 1_c_
-python 1_d_
+python 1_Run_Explanarions.py # This explicit step in not necerssary. Explanations can also be computed on the fly during evalautation
+
 
 # Evaluation Scripts
-python 2a_
-python 2b_
-python 2c_
-python 2d_
+python 2a_Faithfulness_Uni.py
+python 2b_Faithfulness_Multi.py
+python 3a_Robustness_Uni.py
+python 3b_Robustness_Multi.py
+python 4a_Reliability_Uni.py
+python 4b_Reliability_Multi.py
+python 5a_Complexity_Uni.py
+python 5b_Complexity_Multi.py
+
+#Replicate Paper Plots
+python 6_Eval_ploty.py
+
 
 ```
