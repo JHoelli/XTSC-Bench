@@ -2,7 +2,7 @@ import io
 import os
 import subprocess
 import sys
-#TODO Quantus and TSSynth and Plotly
+
 import setuptools
 #subprocess.check_call([sys.executable, "-m", "pip", "install", "Cython"])
 #try:
@@ -13,24 +13,41 @@ import setuptools
 
 
 # Package meta-data.
-NAME = "TSInterpret"
-DESCRIPTION = "todo"
+NAME = "XTSC-Bench"
+DESCRIPTION = ""
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
-URL = "https://ipe-wim-gitlab.fzi.de/hoellig/benchmarkingtimeseries"
-EMAIL = "hoellig@fzi.de"
+URL = "https://"
+EMAIL = "j.hoellig@gmx.net"
 AUTHOR = "Jacqueline Hoellig"
-REQUIRES_PYTHON = ">=3.8.0"
+REQUIRES_PYTHON = ">3.9.0"
 
 # Package requirements.
 base_packages = [
-    "tsinterpret==0.3.1"
-
+    "timesynth @ https://github.com/TimeSynth/TimeSynth/archive/refs/heads/master.zip ",
+    "ipykernel==6.16.0",
+    "ipython==8.5.0",
+    "ipython-genutils==0.2.0",
+    "kaleido==0.2.1",
+    "matplotlib==3.7.2",
+    "numba==0.57.1",
+    "numpy==1.22.1",
+    "pandas==1.3.5",
+    "plotly==5.15.0",
+    #"scikit-image==0.21.0",
+    #"scikit-learn==1.2.0",
+    #"scikit-optimize==0.9.0",
+    "scipy==1.11.1",
+    "seaborn==0.12.2",
+    "sklearn==0.0",
+    "TSInterpret==0.3.1",
+    "quantus==0.4.1",
+    
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Import the README and use it as the long-description.
-with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+with io.open(os.path.join(here, "ReadMe.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 # Load the package's __version__.py module as a dictionary.
@@ -52,7 +69,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=("tests",)),
     install_requires=base_packages,
     extras_require={
-        ":python_version == '3.8'": ["dataclasses"],
+        ":python_version == '3.9'": ["dataclasses"],
     },
     include_package_data=True,
     license="BSD-3",
@@ -62,10 +79,7 @@ setuptools.setup(
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
