@@ -1,0 +1,59 @@
+@startuml
+!theme plain
+
+skinparam linetype ortho
+class Evaluation{
+    <<abstract>> evaluate()
+    <<abstract>> evaluate_synthetic()
+
+
+}
+
+class  Benchmarking.ComplexityEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+
+class  Benchmarking.RoboustnessEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+
+class  Benchmarking.ReliabilityEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+class  Benchmarking.FaithfulnessEvaluation{
+    evaluate()
+    evaluate_synthetic()
+
+}
+
+
+package Synthetic.Data <<Database>>{
+
+
+}
+package Synthetic.Model <<Database>>{
+
+
+}
+
+
+package Benchmarking <<Rectangle>>  {
+.Evaluation -->  Benchmarking.ComplexityEvaluation
+.Evaluation -->  Benchmarking.ReliabilityEvaluation
+.Evaluation -->  Benchmarking.FaithfulnessEvaluation
+.Evaluation -->  Benchmarking.RoboustnessEvaluation
+
+
+}
+package Synthetic <<Rectangle>>  {
+
+}
+
+Benchmarking.ComplexityEvaluation -[dashed]- Synthetic 
+Benchmarking.ReliabilityEvaluation  -[dashed]- Synthetic 
+Benchmarking.FaithfulnessEvaluation  -[dashed]- Synthetic 
+Benchmarking.RoboustnessEvaluation -[dashed]- Synthetic
+@enduml

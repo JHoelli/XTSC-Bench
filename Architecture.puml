@@ -1,0 +1,55 @@
+@startuml
+class Evaluation{
+    <<abstract>> evaluate()
+    <<abstract>> evaluate_synthetic()
+
+
+}
+
+class ComplexityEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+
+class RoboustnessEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+
+class ReliabilityEvaluation{
+    evaluate()
+    evaluate_synthetic()
+}
+class FaithfulnessEvaluation{
+    evaluate()
+    evaluate_synthetic()
+
+}
+
+
+package Data <<Database>>{
+
+
+}
+package Model <<Database>>{
+
+
+}
+Evaluation --> ComplexityEvaluation
+Evaluation --> ReliabilityEvaluation
+Evaluation --> FaithfulnessEvaluation
+Evaluation --> RoboustnessEvaluation
+
+
+Data  -right[hidden]-> Evaluation
+Evaluation -right[hidden]-> Model
+
+Model -[dashed]- ComplexityEvaluation:evaluate_synthetic()
+Data -[dashed]- ComplexityEvaluation:evaluate_synthetic()
+Model -[dashed]- RoboustnessEvaluation:evaluate_synthetic()
+Data -[dashed]- RoboustnessEvaluation:evaluate_synthetic()
+Model -[dashed]- ReliabilityEvaluation:evaluate_synthetic()
+Data -[dashed]- ReliabilityEvaluation:evaluate_synthetic()
+Model -[dashed]- FaithfulnessEvaluation:evaluate_synthetic()
+Data -[dashed]- FaithfulnessEvaluation:evaluate_synthetic()
+@enduml
