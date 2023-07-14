@@ -1,131 +1,50 @@
-import pickle
-import pandas as pd 
+from XTSCBench.metrics.synthetic_helper import get_placeholder_model_and_data
+from TSInterpret.InterpretabilityModels.Saliency.TSR import TSR, Saliency_PTY
+from TSInterpret.InterpretabilityModels.leftist.leftist import LEFTIST
+from TSInterpret.InterpretabilityModels.counterfactual.TSEvoCF import TSEvo
+from TSInterpret.InterpretabilityModels.counterfactual.NativeGuideCF  import NativeGuideCF
+from XTSCBench.metrics.synthetic_helper import get_placeholder_model_and_data
 import numpy as np
-import torch
-#from Benchmarking.Models.LSTM import LSTM
-#from Benchmarking.Models.TCN import TCN
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.synthetic_metrics import find_masks,get_masked_accuracy, get_precision_recall,get_accuracy_metrics, get_precision_recall_plain, get_quantus_metrics
-import os 
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
-import seaborn as sns
-import matplotlib.pyplot as plt
-import time
-import torch
-import plotly.graph_objects as go
-import numpy as np
+from RunExplanations import RunExp
 
 
-class RunExp ():
-    def __init__(self,saliency_functions,typ=['_'],  classificator=['CNN','LSTM'], data_dir='./Benchmarking/data/multivariate/',tolerance = 0):
-        """
-        #TODO TCN Not working --> needs(1,1,50,50 as Input)
-        Attributes: 
-            typ (array): array of string, type of data, For full Iteration use ''
-            datagenertaion (array): array of datageneration processes
-            classificator (array): strings of classificators to be tested ['CNN','LSTM','LSTM_ATT']
-            data_dir (str): data dictonary of functions
-        """# 'SmallMiddle'
-        super().__init__()
-        self.types=typ
-        #self.datagenerationtypes=datagenertaion# TODO FIll Out
-        self.classification_models=classificator
-        self.saliency_functions=saliency_functions
-        #self.interpretation=interpretation
-        self.data_dir=data_dir
-        self.SummaryTableCol=['Datasets','Typ','Generation','models','AUP','AUR','AUPR','AUC','method']
-        self.tolerance=tolerance
+if __name__=='__main__':
+    model,data= get_placeholder_model_and_data()
 
-
-    def calculate_explanations(self,num_items=100, elementwise= None, save_expl=True,explanation_path=None):
-        '''
-        saliency (func): function that takes item and labels as input and returns the interpretation (somentimes lambda function necessary)
-        #TODO Is devision between test and Train clear ? 
-        '''
-        number=0
-        
-        start_loading=time.time()
-        saliency_functions=self.saliency_functions
-        if type(self.types[0])==str: 
-            #FILTERS DATA 
-            data_train, meta_train, label_train, data_full, meta_full, label_full=load_synthetic_data(self.types,self.data_dir,True)
-
-        total = len(list(data_full.keys())) *len(self.classification_models) * len(self.saliency_functions)
-
-        for name in data_full.keys():#range(len(self.datagenerationtypes)):
+    explainers=[
+                LEFTIST(None,data=(np.array([[1]]),np.array([[1]])),mode='feat', backend='PYT',learning_process_name='Lime',transform_name='random'),
+                LEFTIST(None,data=(np.array([[1]]),np.array([[1]])),mode='feat', backend='PYT',learning_process_name='SHAP',transform_name='random'),
+                Saliency_PTY(None, None,None, method='GRAD', mode='feat', tsr=True),
+                Saliency_PTY(None, None,None, method='GS', mode='feat', tsr=True),
+                Saliency_PTY(None, None,None, method='SG', mode='feat', tsr=True),
+                Saliency_PTY(None, None,None, method='FO', mode='feat', tsr=True),
+                Saliency_PTY(None, None,None, method='GRAD', mode='feat', tsr=False),
+                Saliency_PTY(None, None,None, method='GS', mode='feat', tsr=False),
+                Saliency_PTY(None, None,None, method='SG', mode='feat', tsr=False),
+                Saliency_PTY(None, None,None, method='FO', mode='feat', tsr=False),
+                TSEvo(model= None,data=(np.array([0]),[0]), mode = 'feat',backend='PYT',epochs=100),
                 
-                start_data=time.time()
-                splitting = name.split('_')
-                typ=splitting[-6]
-                generation=splitting[-5]
-                data=data_full[name][:num_items]
-                label=label_full[name][:num_items]
-                meta=meta_full[name][:num_items]
-                data_shape_1=data.shape[1]
-                data_shape_2=data.shape[2]
-
-                
-                raw_data=np.copy(data)
-
-                data, test_loaderRNN, scaler = scaling(data, label, data_shape_1, data_shape_2)
-                modelName =  name.replace('Testing','Training')
                
-                for m in self.classification_models:
-                    #print(f'MODEL {m}')
-                    start_class=time.time()
-                    for saliency in saliency_functions:
-                        #print(f'Name : {name}, model: {m}, saliency: {saliency}, generation: {generation}, typ: {typ}, modelname: {modelName}')
-                        s= str(type(saliency)).split('.')[-1].replace('>','')
-                        sav=str(parameters_to_pandas(saliency).values)
+                
+                
+                ]
+    
 
-                        if os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{sav}.csv'):
-                            number=number+1
-                            continue
-                       
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
 
-                        mname=name.replace('Testing','Training')
-                        print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(saliency))}, params {parameters_to_pandas(saliency)}')
-                        l_train=label_train[name]
-                        #print(l_train)
-                        d_train=data_train[name]
-                        #print('Shape of Training Data',d_train.shape)
-                        saliency_old=saliency
-                        saliency = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, saliency, mod)
-                        if type(saliency)== str: 
-                            #with open(f'{elementwise}/plain/{name}_{m}_{str(parameters_to_pandas(saliency_old).values)}.txt', 'w') as f:
-                            #    f.write(f'{saliency}')
-                            with open(f'{elementwise}/Debug.txt', 'w') as f:
-                                f.write(f'{name}_{m}_{str(parameters_to_pandas(saliency_old).values)} -- Constant Predictore')
-                                f.close()
-                            if save_expl:
-                                s= str(type(saliency_old)).split('.')[-1].replace('>','')#
-                                sav=str(parameters_to_pandas(saliency_old).values)
-                                with open(f'./Results/Explanation/{name}_{m}_{s}_{sav}.csv', 'wb') as f:
-                                    np.save(f,np.array([]))
-                                    f.close()
-                            continue
-                      
-                        start_for_loop= time.time()
-                        if explanation_path is None:
-                            try: 
-                                sal=get_explanation(data, label, data_shape_1, data_shape_2, saliency, mod)
-                            except: 
-                                continue
-                        else: 
-                            s= str(type(saliency)).split('.')[-1].replace('>','')
-                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(saliency).values)}.csv')
-                            if 'CNN' in str(type(mod)):
-                                sal=res.reshape(-1,data_shape_2,data_shape_1)
-                            else:
-                                sal=res.reshape(-1,data_shape_1,data_shape_2)
 
-                        if save_expl:
-                            s= str(type(saliency)).split('.')[-1].replace('>','')#TODO Used to be '\n'
-                            with open(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(saliency).values)}.csv', 'wb') as f:
-                                try:
-                                    np.save(f,np.array(sal))
-                                except: 
-                                    print(sal)
-                                    print(len(sal))
-                                    
+    data_dir=['./Benchmarking/data/univariate']
+    bm=RunExp(explainers, typ='_')
+    bm.calculate_explanations(num_items=20, save_expl=True,explanation_path=None)
+
+
+    #Only CNN
+
+    explainers=[
+                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NUN_CF'),
+                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='dtw_bary_center'),
+                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NG') ,                      
+                ]
+
+    data_dir=['./Benchmarking/data/univariate']
+    bm=RunExp(explainers,classificator=['CNN'], typ='_')
+    bm.calculate_explanations(num_items=20, save_expl=True,explanation_path=None)
