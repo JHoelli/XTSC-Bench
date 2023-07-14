@@ -2,9 +2,9 @@
 from TSInterpret.InterpretabilityModels.Saliency.TSR import TSR, Saliency_PTY
 from TSInterpret.InterpretabilityModels.counterfactual.TSEvoCF import TSEvo
 import torch 
-from Benchmarking.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
-from Benchmarking.ClassificationModels.LSTM import LSTM
-from Benchmarking.ComplexityEvaluation import ComplexityEvaluation
+from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
+from XTSCBench.ClassificationModels.LSTM import LSTM
+from XTSCBench.ComplexityEvaluation import ComplexityEvaluation
 from tslearn.datasets import UCR_UEA_datasets
 import sklearn
 import numpy as np 
@@ -24,16 +24,13 @@ test_dataset = UCRDataset(test_x.astype(np.float64),test_y.astype(np.int64))
 train_loader = torch.utils.data.DataLoader(train_dataset,batch_size=16,shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_dataset,batch_size=1,shuffle=False)
 if os.path.isfile('temp_lstm'):
-    model=torch.load( 'temp_lstm')
+    model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
+    model.load_state_dict(torch.load( 'temp_lstm'))
 else:
     model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
     fit(model,train_loader,test_loader)
     torch.save(model, 'temp_lstm')
 model.eval()
-
-import importlib
-import Benchmarking
-importlib.reload(Benchmarking)
 # For use with CNN set mode ='feat'
 explainer =  [Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True),TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
 bm=ComplexityEvaluation(explainer=explainer)
