@@ -16,10 +16,10 @@ from typing import List
 from deap import base
 from deap import creator
 import torch
-from Benchmarking.Evaluation import Evaluation
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data, manipulate_exp_method
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSC-Bench.Evaluation import Evaluation
+from XTSC-Bench.metrics.synthetic_helper import load_synthetic_data, manipulate_exp_method
+from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSC-Bench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 
 import torch.utils.data as data_utils

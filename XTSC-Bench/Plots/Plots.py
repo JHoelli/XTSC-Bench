@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 import os
 import plotly.graph_objects as go
-from Benchmarking.metrics.synthetic_helper import *
+from XTSC-Bench.metrics.synthetic_helper import *
 
 
     
@@ -80,9 +80,9 @@ def box_plot_itemwise_data(path,metric_name='acc',split_column='explanation',fig
                 data_temp = data_temp[data_temp['params_exp'].isin(methods)]
 
             if '_1_' in file: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
             else: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
 
             new_df = pd.merge(data_temp, acc,  how='left', on=['name','model'],validate='m:1')
 
@@ -218,9 +218,9 @@ def informative_feat_approach_box_plot(path,metric_name='acc',split_column1='par
                     
 
             if '_1_' in file: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
             else: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
 
             new_df = pd.merge(data_temp, acc,  how='left', on=['name','model'],validate='m:1')
 
@@ -393,9 +393,9 @@ def Latex_Table(elementwise_dir,acc_model_threshold=0.9,methods=['FO','GRAD','GS
                     
 
             if '_1_' in file: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_univariate.csv',index_col=0)
             else: 
-                acc=pd.read_csv('./Benchmarking/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
+                acc=pd.read_csv('./XTSC-Bench/ClassificationModels/models_new/preformance_multivariate.csv',index_col=0)
 
             new_df = pd.merge(data_temp, acc,  how='left', on=['name','model'],validate='m:1')
 
@@ -486,7 +486,7 @@ def plot_itemwise_ORG_vs_GT(data_name,data_dir,model, explainer,i,resultpath,sav
         data_full,_, scaler= scaling( data, label_full, data_shape_1, data_shape_2)
         # Load Model 
         modelName =  data_name.replace('Testing','Training')
-        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{model}/{modelName}',map_location='cpu')
+        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{model}/{modelName}',map_location='cpu')
         # Load & Manipulate Explainer 
         explainer= manipulate_exp_method(data_full, label_full, data_shape_1, data_shape_2, scaler, explainer, mod,check_consist=False)
 

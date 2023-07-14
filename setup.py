@@ -17,8 +17,8 @@ NAME = "XTSC-Bench"
 DESCRIPTION = ""
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
 URL = "https://"
-EMAIL = "j.hoellig@gmx.net"
-AUTHOR = "Jacqueline Hoellig"
+EMAIL = "."
+AUTHOR = "."
 REQUIRES_PYTHON = ">3.9.0"
 
 # Package requirements.

@@ -2,18 +2,18 @@ import pickle
 import pandas as pd 
 import numpy as np
 import torch
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.reliability_metrics import get_reliability_metrics
+from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSC-Bench.metrics.reliability_metrics import get_reliability_metrics
 from sklearn import preprocessing as pre
 import os 
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSC-Bench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import torch
 import plotly.graph_objects as go
 import numpy as np
-from Benchmarking.Helper import  counterfactual_manipulator
+from XTSC-Bench.Helper import  counterfactual_manipulator
 
 class ReliabilityEvaluation ():
     
@@ -144,7 +144,7 @@ class ReliabilityEvaluation ():
                         if does_entry_already_exist(old_data, m, generation, typ, modelName):
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}')
+                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}')
                         mname=name.replace('Testing','Training')
                         
                         

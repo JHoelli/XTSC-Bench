@@ -2,12 +2,12 @@ import pickle
 import pandas as pd 
 import numpy as np
 import torch
-#from Benchmarking.Models.LSTM import LSTM
-#from Benchmarking.Models.TCN import TCN
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.synthetic_metrics import find_masks,get_masked_accuracy, get_precision_recall,get_accuracy_metrics, get_precision_recall_plain, get_quantus_metrics
+#from XTSC-Bench.Models.LSTM import LSTM
+#from XTSC-Bench.Models.TCN import TCN
+from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSC-Bench.metrics.synthetic_metrics import find_masks,get_masked_accuracy, get_precision_recall,get_accuracy_metrics, get_precision_recall_plain, get_quantus_metrics
 import os 
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSC-Bench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 class Synthetic ():
-    def __init__(self,saliency_functions,typ=['_'],  classificator=['CNN','LSTM'], data_dir='./Benchmarking/data/multivariate/',tolerance = 0):
+    def __init__(self,saliency_functions,typ=['_'],  classificator=['CNN','LSTM'], data_dir='./XTSC-Bench/data/multivariate/',tolerance = 0):
         """
         #TODO TCN Not working --> needs(1,1,50,50 as Input)
         Attributes: 
@@ -100,7 +100,7 @@ class Synthetic ():
                             number=number+1
                             continue    
                         #{modelName}_BEST.pkl'
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
 
                         mname=name.replace('Testing','Training')
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(saliency))}, params {parameters_to_pandas(saliency)}')

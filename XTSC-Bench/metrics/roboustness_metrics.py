@@ -2,7 +2,7 @@ import quantus
 import numpy as np
 import torch
 import pandas as pd
-from Benchmarking.metrics.metrics_helper import Quantus_Wrapper
+from XTSC-Bench.metrics.metrics_helper import Quantus_Wrapper
 # USE Quantus
 
 

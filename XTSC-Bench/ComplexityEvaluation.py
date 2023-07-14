@@ -1,13 +1,13 @@
-from Benchmarking.Evaluation import Evaluation
+from XTSC-Bench.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from Benchmarking.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSC-Bench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.complexity_metrics import get_complexity_metrics
-from Benchmarking.metrics.synthetic_helper import get_explanation
+from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSC-Bench.metrics.complexity_metrics import get_complexity_metrics
+from XTSC-Bench.metrics.synthetic_helper import get_explanation
 import quantus
 
 class ComplexityEvaluation(Evaluation):
@@ -149,7 +149,7 @@ class ComplexityEvaluation(Evaluation):
                             number =number+1
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
