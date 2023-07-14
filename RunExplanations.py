@@ -94,6 +94,7 @@ class RunExp ():
                         saliency_old=saliency
                         saliency = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, saliency, mod)
                         if type(saliency)== str: 
+                            number=number+1
                             if save_expl:
                                 s= str(type(saliency_old)).split('.')[-1].replace('>','')#
                                 sav=str(parameters_to_pandas(saliency_old).values)
@@ -107,6 +108,7 @@ class RunExp ():
                             try: 
                                 sal=get_explanation(data, label, data_shape_1, data_shape_2, saliency, mod)
                             except: 
+                                number=number+1
                                 continue
                         else: 
                             s= str(type(saliency)).split('.')[-1].replace('>','')
@@ -124,4 +126,5 @@ class RunExp ():
                                 except: 
                                     print(sal)
                                     print(len(sal))
+                        number=number+1
                                     
