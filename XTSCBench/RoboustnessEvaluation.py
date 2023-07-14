@@ -1,14 +1,14 @@
-from XTSC-Bench.Evaluation import Evaluation
+from XTSCBench.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from XTSC-Bench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSC-Bench.metrics.roboustness_metrics import get_roboustness_metrics
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.metrics.roboustness_metrics import get_roboustness_metrics
 import quantus
-from XTSC-Bench.Helper import  counterfactual_manipulator
+from XTSCBench.Helper import  counterfactual_manipulator
 
 class RoboustnessEvaluation(Evaluation):
     """

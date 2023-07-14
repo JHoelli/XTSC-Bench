@@ -2,7 +2,7 @@ import quantus
 import numpy as np
 import torch
 import pandas as pd
-from XTSC-Bench.metrics.metrics_helper import Quantus_Wrapper
+from XTSCBench.metrics.metrics_helper import Quantus_Wrapper
 
 
 def complexity(mod,data,label, res,exp):

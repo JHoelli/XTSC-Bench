@@ -3,8 +3,8 @@ import numpy as np
 import torch
 from torch import nn
 import torch.nn.functional as F 
-from XTSC-Bench.ClassificationModels.CNN_T import ResNetBaseline
-from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 import torch.utils.data as data_utils
 import copy

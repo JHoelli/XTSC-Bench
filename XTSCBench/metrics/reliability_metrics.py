@@ -2,8 +2,8 @@ import quantus
 import numpy as np
 import torch
 import pandas as pd
-from XTSC-Bench.metrics.metrics_helper import Quantus_Wrapper
-from XTSC-Bench.metrics.synthetic_metrics import get_reference_samples
+from XTSCBench.metrics.metrics_helper import Quantus_Wrapper
+from XTSCBench.metrics.synthetic_metrics import get_reference_samples
 
 
 

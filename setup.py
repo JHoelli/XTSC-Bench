@@ -13,7 +13,7 @@ import setuptools
 
 
 # Package meta-data.
-NAME = "XTSC-Bench"
+NAME = "XTSCBench"
 DESCRIPTION = ""
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
 URL = "https://"
@@ -39,7 +39,7 @@ base_packages = [
     "scipy==1.11.1",
     "seaborn==0.12.2",
     "sklearn==0.0",
-    "TSInterpret==0.3.1",
+    #"TSInterpret>0.3.0",
     "quantus==0.4.1",
     
 ]

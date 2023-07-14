@@ -2,18 +2,18 @@ import pickle
 import pandas as pd 
 import numpy as np
 import torch
-from XTSC-Bench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSC-Bench.metrics.reliability_metrics import get_reliability_metrics
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.metrics.reliability_metrics import get_reliability_metrics
 from sklearn import preprocessing as pre
 import os 
-from XTSC-Bench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSCBench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import torch
 import plotly.graph_objects as go
 import numpy as np
-from XTSC-Bench.Helper import  counterfactual_manipulator
+from XTSCBench.Helper import  counterfactual_manipulator
 
 class ReliabilityEvaluation ():
     
