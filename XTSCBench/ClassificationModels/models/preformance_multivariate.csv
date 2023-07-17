@@ -1,0 +1,7 @@
+,model,name,acc,f1,prec,rec,auc
+0,LSTM,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,0.48,0.48,1.0,0.48,0.5
+1,LSTM_ATT,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,0.99,0.99,1.0,0.979591836734694,0.9903846153846152
+2,CNN,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+3,LSTM,SimulatedTrainingData_Middle_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+4,LSTM_ATT,SimulatedTrainingData_Middle_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+5,CNN,SimulatedTrainingData_Middle_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
