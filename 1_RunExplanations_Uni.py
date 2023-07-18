@@ -32,8 +32,8 @@ if __name__=='__main__':
 
 
 
-    data_dir=['./Benchmarking/data/univariate']
-    bm=RunExp(explainers, typ='_')
+    data_dir=['./XTSCBench/data/univariate']
+    bm=RunExp(explainers, typ='_', data_dir=data_dir[0])
     bm.calculate_explanations(num_items=20)
 
 
@@ -45,6 +45,6 @@ if __name__=='__main__':
                 NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NG') ,                      
                 ]
 
-    data_dir=['./Benchmarking/data/univariate']
-    bm=RunExp(explainers,classificator=['CNN'], typ='_')
+    data_dir=['./XTSCBench/data/univariate']
+    bm=RunExp(explainers,classificator=['CNN'], typ='_', data_dir=data_dir[0])
     bm.calculate_explanations(num_items=20)

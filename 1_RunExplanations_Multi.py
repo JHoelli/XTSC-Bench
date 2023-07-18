@@ -28,7 +28,7 @@ if __name__=='__main__':
                 
                 ]
     
-    data_dir=['./Benchmarking/data/multivariate']
+    data_dir=['./XTSCBench/data/multivariate']
     
     bm=RunExp(explainers, typ='_')
     bm.calculate_explanations(num_items=20)
