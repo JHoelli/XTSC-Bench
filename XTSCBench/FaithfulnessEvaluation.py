@@ -1,13 +1,13 @@
-from XTSCBench.Evaluation import Evaluation
+from Benchmarking.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from Benchmarking.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSCBench.metrics.faithfulness_metrics import get_faithfullness_metrics
-from XTSCBench.Helper import counterfactual_manipulator
+from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from Benchmarking.metrics.faithfulness_metrics import get_faithfullness_metrics
+from Benchmarking.Helper import counterfactual_manipulator
 import quantus
 
 class FaithfulnessEvaluation(Evaluation):
@@ -87,7 +87,7 @@ class FaithfulnessEvaluation(Evaluation):
 
         pass
 
-    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None):
+    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None, save_exp=False):
         '''
         Evaluates Faithfulness on Sythetic Data.
         Attributes: 
@@ -156,11 +156,13 @@ class FaithfulnessEvaluation(Evaluation):
                             number =number+1
                             print('Entry exists')
                             continue  
+                        #import sys 
+                        #sys.exit(1) 
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
                         mname=name.replace('Testing','Training')
                         explainer_old=explainer
-                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=False)
+                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=True)
 
                         if type(explainer) ==str: 
                             #TODO add Log?
@@ -172,10 +174,17 @@ class FaithfulnessEvaluation(Evaluation):
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer_old).values)}.csv' not in os.listdir(explanation_path) :
-                            res=get_explanation(data, label, shape_1, shape_2, explainer, mod)
-                            res=np.array(res).reshape(-1,shape_2,shape_1)
-                           
+                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                            res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
+                            res=np.array(res)
+                            if save_exp is not None:
+                                s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
+                                with open(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
+                                    try:
+                                        np.save(f,np.array(res))
+                                    except: 
+                                        print(res)
+                                        print(len(res)) 
                         else:                             
                             
                             res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer_old).values)}.csv')

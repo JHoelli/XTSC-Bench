@@ -1,21 +1,22 @@
 import pickle
+from Benchmarking.Evaluation import Evaluation
 import pandas as pd 
 import numpy as np
 import torch
-from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSCBench.metrics.reliability_metrics import get_reliability_metrics
+from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from Benchmarking.metrics.reliability_metrics import get_reliability_metrics
 from sklearn import preprocessing as pre
 import os 
-from XTSCBench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import torch
 import plotly.graph_objects as go
 import numpy as np
-from XTSCBench.Helper import  counterfactual_manipulator
+from Benchmarking.Helper import  counterfactual_manipulator
 
-class ReliabilityEvaluation ():
+class ReliabilityEvaluation (Evaluation):
     
     def __init__(self, mlmodel,explainer,metrics=None):
         #super().__init__(mlmodel)
@@ -96,8 +97,7 @@ class ReliabilityEvaluation ():
         '''
         self.types=types
         self.classification_models= classificator
-        issues=[]
-        
+     
         '''Load Data'''
         if type(self.types[0])==str: 
             data_train, meta_train, label_train,data_full,meta_full,label_full=load_synthetic_data(self.types,data_dir,return_train=True)
@@ -143,61 +143,43 @@ class ReliabilityEvaluation ():
                         '''Check wheather Calculation already exists'''
                         if does_entry_already_exist(old_data, m, generation, typ, modelName):
                             continue  
+                       
+                        '''Check wheather Calculation already exists'''
+                        if does_entry_already_exist(old_data, m, generation, typ, modelName):
+                            number =number+1
+                            continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}')
-                        mname=name.replace('Testing','Training')
-                        
+                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        old_explainer = explainer
+                        explainer = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, explainer, mod)
+
+                        if type(explainer) ==str: 
+                            #TODO add Log?
+                            print('Predictor returns constant predictoe')
+                            continue      
                         
                         '''Calculate Explanations'''
-                        y_pred=[]
+                        data=data_full[name][:num_items]
+                        label=label_full[name][:num_items]
+                        meta=meta_full[name][:num_items]
                         res=[]
-                        if explanation_path is None: 
-                            explainer = manipulate_exp_method(d_train, l_train,  data_shape_1,  data_shape_2, scaler, explainer, mod)
+                        s= str(type(explainer)).split('.')[-1].replace('>','')
+                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                            res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod)
+                            #TODO add save
+                            res=np.array(res)
+                        else:                             
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv',allow_pickle=True)[:num_items]
+                        if None in res: 
+                            res,data,meta,label=counterfactual_manipulator(res,data, meta=meta, data_shape_1=data_shape_1,data_shape_2=data_shape_2,scaler=scaler, raw_data=None, scaling=True, labels=label,cf_man=False)
 
-                            if type(explainer) ==str: 
-                                #TODO add Log?
-                                continue
-                            
-                            exp=get_explanation(data, label, data_shape_1, data_shape_2, explainer, mod)
-
-                            if save_exp is not None:
-                                s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
-                                with open(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
-                                    try:
-                                        np.save(f,np.array(exp))
-                                    except: 
-                                        print(exp)
-                                        print(len(exp))
-                                pass 
-
-                        else:                       
-                            s= str(type(explainer)).split('.')[-1].replace('>','')
-                            try:
-                                exp=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv')
-                            except: 
-                                issues.append([name,str(parameters_to_pandas(explainer).values) ])
-                                pd.DataFrame(issues).to_csv('Reliability_Issues.csv')
-                                continue
-                            exp=np.array(exp).reshape(-1,data_shape_1,data_shape_2)[:num_items]
-                            
-
-
-
-                        if 'CF' in str(type(explainer)):
-                            exp, data_man, meta_man,_= counterfactual_manipulator(exp,data, meta, data_shape_1,data_shape_2,scaler,raw_data)
-                            if len(exp)== 0:
-                                continue
-                        else: 
-                            data_man=data
-                            meta_man=meta
-
-            
-                        if len(exp)>0:
-                            distances = get_reliability_metrics(data_man[:num_items], exp[:num_items],mod,label[:num_items],meta_man[:num_items],(data_shape_1,data_shape_2))
-                        else: 
-                            number =number+1
-                            print('NoEXPLANTION')
+                            num_items=len(res)
+                        exp=res
+                        if len(exp)== 0:
                             continue
+                        exp=np.array(exp).reshape(-1,data_shape_1,data_shape_2)[:num_items]                  
+                        distances = get_reliability_metrics(data[:num_items], exp[:num_items],mod,label[:num_items],meta[:num_items],(data_shape_1,data_shape_2))
+ 
                         number =number+1
 
                         '''Savings Section'''
@@ -224,7 +206,7 @@ class ReliabilityEvaluation ():
                             SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
                         else: 
                             SummaryTable=new_row_summary
-       
+
 
                         if save is None:
                             SummaryTable.to_csv('temp.csv')

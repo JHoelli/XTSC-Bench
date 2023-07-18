@@ -1,13 +1,14 @@
-from XTSCBench.Evaluation import Evaluation
+from Benchmarking.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from Benchmarking.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSCBench.metrics.complexity_metrics import get_complexity_metrics
-from XTSCBench.metrics.synthetic_helper import get_explanation
+from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from Benchmarking.metrics.complexity_metrics import get_complexity_metrics
+from Benchmarking.metrics.synthetic_helper import get_explanation
+from Benchmarking.Helper import counterfactual_manipulator
 import quantus
 
 class ComplexityEvaluation(Evaluation):
@@ -45,6 +46,7 @@ class ComplexityEvaluation(Evaluation):
         
         for baseline in self.explainers:    
             exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
+            print('EXP',exp)
             exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
             row_summary=get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
             #print(row_summary)
@@ -88,7 +90,7 @@ class ComplexityEvaluation(Evaluation):
         return SummaryTable
         
 
-    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None):
+    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None,save_exp=False):
         '''
         Evaluates Complexity on Sythetic Data.
         Attributes: 
@@ -149,30 +151,39 @@ class ComplexityEvaluation(Evaluation):
                             number =number+1
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSC-Bench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
-                            #TODO add Log?
                             print('Predictor returns constant predictoe')
                             continue
                         
                         '''Calculate Explanations'''
+                        data=data_full[name][:num_items]
+                        label=label_full[name][:num_items]
                         res=[]
-                        if explanation_path is None:
-                            print('THIS IS NOT SUPPOSE TO HAPPEN')
-                            res=get_explanation(data, label, shape_1, shape_2, explainer, mod)
+                        s= str(type(explainer)).split('.')[-1].replace('>','')
+                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                            res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
+                            res=np.array(res)
+                            if save_exp is not None:
+                                s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
+                                with open(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
+                                    try:
+                                        np.save(f,np.array(res))
+                                    except: 
+                                        print(res)
+                                        print(len(res)) 
                         else:                             
-                            s= str(type(explainer)).split('.')[-1].replace('>','')
-                            # TODO Make this work for native guide without expect
-                            try: 
-                                res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv')[:num_items]
-                            except: 
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv',allow_pickle=True)[:num_items]
+                            if type(res)== str: 
                                 continue
-                            if 'CNN' in str(type(mod)):
-                                res=res.reshape(-1,shape_2,shape_1)
-                            else:
-                                res=res.reshape(-1,shape_1,shape_2)
+                        if None in res: 
+                            res,data,_,label=counterfactual_manipulator(res,data, meta=None, data_shape_1=shape_1,data_shape_2=shape_2,scaler=scaler, raw_data=None, scaling=True, labels=label,cf_man=False)
+
+                            num_items=len(res)
+
                         if 'CNN' in str(type(mod)):
                             mode='feat'
                             data = data.reshape(-1,shape_2,shape_1)
@@ -183,12 +194,9 @@ class ComplexityEvaluation(Evaluation):
                             res=res.reshape(-1,shape_1,shape_2)
 
                         label=label.astype(int)
-                        if len(res)>0:
-                            row_summary=get_complexity_metrics(data[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
-                        else: 
-                            print('Response Length smaller 0 ')
-                            number =number+1
-                            continue
+                        #TODO Eliminate  if 
+                        row_summary=get_complexity_metrics(data[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
+                    
                         number =number+1
                         '''Savings Section'''
                         if elementwise is not None:
