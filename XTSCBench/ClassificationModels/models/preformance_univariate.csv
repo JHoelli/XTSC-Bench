@@ -3,3 +3,6 @@
 1,LSTM_ATT,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,0.86,0.8599999999999999,0.8148148148148148,0.9166666666666666,0.8639291465378424
 2,CNN,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,0.96,0.96,0.9444444444444444,0.9807692307692308,0.961352657004831
 3,LSTM,SimulatedTrainingData_Middle_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+4,LSTM_ATT,SimulatedTrainingData_Middle_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+5,CNN,SimulatedTrainingData_Middle_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+6,LSTM,SimulatedTrainingData_Middle_CAR_F_1_TS_50.npy,0.62,0.62,1.0,0.6,0.5581395348837209
