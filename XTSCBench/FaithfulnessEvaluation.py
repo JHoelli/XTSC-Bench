@@ -159,9 +159,7 @@ class FaithfulnessEvaluation(Evaluation):
                         #import sys 
                         #sys.exit(1) 
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
-                        mname=name.replace('Testing','Training')
-                        explainer_old=explainer
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=True)
 
                         if type(explainer) ==str: 
@@ -174,7 +172,7 @@ class FaithfulnessEvaluation(Evaluation):
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
                             res=np.array(res)
                             if save_exp is not None:
@@ -187,7 +185,7 @@ class FaithfulnessEvaluation(Evaluation):
                                         print(len(res)) 
                         else:                             
                             
-                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer_old).values)}.csv')
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv')
                             #print('RES',len(res))
                             if len(res)<1:
                                 issue.append([name,str(parameters_to_pandas(explainer).values)])
