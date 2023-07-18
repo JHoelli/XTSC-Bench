@@ -46,7 +46,6 @@ class RoboustnessEvaluation(Evaluation):
         SummaryTable = pd.DataFrame([])
         data_shape_1= items.shape[-2]
         data_shape_2= items.shape[-1]
-        print('exp1', exp)
         for baseline in self.explainers:    
             label = get_preds(model, items)
             res=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
@@ -156,19 +155,19 @@ class RoboustnessEvaluation(Evaluation):
                             print('Entry exists')
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
-                        explainer_old=explainer    
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')  
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
                             print('Predictor returns constant predictoe')
+                            number+=1
                             continue
                         
                         '''Calculate Explanations'''
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')   
-                        if explanation_path is None or not os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer_old).values)}.csv') :                          
+                        if explanation_path is None or not os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
 
                             exp=get_explanation(data, label,shape_1, shape_2, explainer, mod)
                             exp=np.array(exp)
@@ -182,10 +181,11 @@ class RoboustnessEvaluation(Evaluation):
                                         print(len(exp)) 
                             res=exp
                         else:                             
-                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer_old).values)}.csv',allow_pickle=True)
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)
                             if type(res)== str: 
+                                number+=1
                                 continue
-                        if os.path.isfile(f'{elementwise}/Roboustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv'):
+                        if os.path.isfile(f'{elementwise}/Robustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv'):
                             print('Exits')
                             continue
                         data_man=data
@@ -219,7 +219,7 @@ class RoboustnessEvaluation(Evaluation):
                             newdf.columns = df.columns
                             newdf['explanation'] =np.repeat(str(type(explainer)).split('.')[-1], len(newdf), axis=0)
                             distances_man = pd.concat([row_summary,newdf], axis = 1)
-                            distances_man.to_csv(f'{elementwise}/Roboustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv')
+                            distances_man.to_csv(f'{elementwise}/Robustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv')
                         #print(distances_man.head())
                       
 
