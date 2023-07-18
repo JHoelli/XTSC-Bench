@@ -1,20 +1,20 @@
 import pickle
-from Benchmarking.Evaluation import Evaluation
+from XTSCBench.Evaluation import Evaluation
 import pandas as pd 
 import numpy as np
 import torch
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.reliability_metrics import get_reliability_metrics
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.metrics.reliability_metrics import get_reliability_metrics
 from sklearn import preprocessing as pre
 import os 
-from Benchmarking.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSCBench.metrics.synthetic_helper import load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import seaborn as sns
 import matplotlib.pyplot as plt
 import time
 import torch
 import plotly.graph_objects as go
 import numpy as np
-from Benchmarking.Helper import  counterfactual_manipulator
+from XTSCBench.Helper import  counterfactual_manipulator
 
 class ReliabilityEvaluation (Evaluation):
     
@@ -149,7 +149,7 @@ class ReliabilityEvaluation (Evaluation):
                             number =number+1
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
                         old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, explainer, mod)
 

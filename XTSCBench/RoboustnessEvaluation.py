@@ -1,14 +1,14 @@
-from Benchmarking.Evaluation import Evaluation
+from XTSCBench.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from Benchmarking.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.roboustness_metrics import get_roboustness_metrics
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.metrics.roboustness_metrics import get_roboustness_metrics
 import quantus
-from Benchmarking.Helper import  counterfactual_manipulator
+from XTSCBench.Helper import  counterfactual_manipulator
 
 class RoboustnessEvaluation(Evaluation):
     """
@@ -156,7 +156,7 @@ class RoboustnessEvaluation(Evaluation):
                             print('Entry exists')
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
                         explainer_old=explainer    
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 

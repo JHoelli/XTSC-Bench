@@ -1,13 +1,13 @@
-from Benchmarking.Evaluation import Evaluation
+from XTSCBench.Evaluation import Evaluation
 import torch
 from sklearn.neighbors import NearestNeighbors
 import pandas as pd 
 import numpy as np
-from Benchmarking.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
+from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
-from Benchmarking.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from Benchmarking.metrics.faithfulness_metrics import get_faithfullness_metrics
-from Benchmarking.Helper import counterfactual_manipulator
+from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
+from XTSCBench.metrics.faithfulness_metrics import get_faithfullness_metrics
+from XTSCBench.Helper import counterfactual_manipulator
 import quantus
 
 class FaithfulnessEvaluation(Evaluation):
@@ -159,7 +159,7 @@ class FaithfulnessEvaluation(Evaluation):
                         #import sys 
                         #sys.exit(1) 
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./Benchmarking/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
                         mname=name.replace('Testing','Training')
                         explainer_old=explainer
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=True)

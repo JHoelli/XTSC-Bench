@@ -125,3 +125,4 @@
 123,LSTM,SimulatedTrainingData_PostionalTime_PseudoPeriodic_F_50_TS_50.npy,0.53,0.53,1.0,0.53,0.5
 124,LSTM_ATT,SimulatedTrainingData_PostionalTime_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 125,CNN,SimulatedTrainingData_PostionalTime_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+126,LSTM,SimulatedTrainingData_RareFeature_AutoRegressive_F_50_TS_50.npy,0.47,0.47,0.0,0.0,0.5
