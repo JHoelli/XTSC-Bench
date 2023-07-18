@@ -46,7 +46,6 @@ class ComplexityEvaluation(Evaluation):
         
         for baseline in self.explainers:    
             exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
-            print('EXP',exp)
             exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
             row_summary=get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
             #print(row_summary)
@@ -159,7 +158,7 @@ class ComplexityEvaluation(Evaluation):
                         label=label_full[name][:num_items]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                        if explanation_path is None or f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
                             res=np.array(res)
                             if save_exp is not None:
@@ -171,7 +170,7 @@ class ComplexityEvaluation(Evaluation):
                                         print(res)
                                         print(len(res)) 
                         else:                             
-                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv',allow_pickle=True)[:num_items]
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)[:num_items]
                             if type(res)== str: 
                                 continue
                         if None in res: 

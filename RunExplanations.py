@@ -56,18 +56,16 @@ class RunExp ():
                        
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
 
-                        mname=name.replace('Testing','Training')
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
                         l_train=label_train[name]
                         d_train=data_train[name]
-                        explainer_old=explainer
                         explainer = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, explainer, mod)
                         if type(explainer)== str:
                             # In case of constant Predictor add empty explanation 
                             number=number+1
                     
-                            s= str(type(explainer_old)).split('.')[-1].replace('>','')#
-                            sav=str(parameters_to_pandas(explainer_old).values)
+                            s= str(type(explainer)).split('.')[-1].replace('>','')#
+                            sav=str(parameters_to_pandas(explainer).values)
                             with open(f'./Results/Explanation/{name}_{m}_{s}_{sav}.csv', 'wb') as f:
                                 np.save(f,np.array([]))
                                 f.close()
