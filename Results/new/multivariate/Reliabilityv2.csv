@@ -1,0 +1,2 @@
+,Pointing_mean,Relevance Rank_mean,Relevance Mass_mean,AuC_mean,Pointing_std,Relevance Rank_std,Relevance Mass_std,AuC_std,method,tsr,Datasets,Typ,Generation,models
+0,0.05,0.3197222222222222,0.16179397005730076,0.48313003472222216,0.22360679774997894,0.058673749129462334,0.06462219544496743,0.06035726601233213,GRAD,True,SimulatedTrainingData_Middle_NARMA_F_50_TS_50.npy,Middle,NARMA,LSTM

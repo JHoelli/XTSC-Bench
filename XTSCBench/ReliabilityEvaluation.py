@@ -149,7 +149,7 @@ class ReliabilityEvaluation (Evaluation):
                             number =number+1
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
                         old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, explainer, mod)
 
@@ -164,12 +164,12 @@ class ReliabilityEvaluation (Evaluation):
                         meta=meta_full[name][:num_items]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod)
                             #TODO add save
                             res=np.array(res)
                         else:                             
-                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv',allow_pickle=True)[:num_items]
+                            res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)[:num_items]
                         if None in res: 
                             res,data,meta,label=counterfactual_manipulator(res,data, meta=meta, data_shape_1=data_shape_1,data_shape_2=data_shape_2,scaler=scaler, raw_data=None, scaling=True, labels=label,cf_man=False)
 
