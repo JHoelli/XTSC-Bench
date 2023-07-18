@@ -60,10 +60,8 @@ class ComplexityEvaluation(Evaluation):
                 means = row_summary.mean().add_suffix('_mean')
                 std = row_summary.std().add_suffix('_std')
                 new= pd.concat([means,std]).to_frame().T
-                #print(new)
                 new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
-                #print(new_row_summary)
-                
+ 
             if len(SummaryTable)== 0:
                 SummaryTable=new_row_summary
             else:
@@ -72,9 +70,6 @@ class ComplexityEvaluation(Evaluation):
         if expla is not None: 
             row_summary=get_complexity_metrics(items,expla,model,label,baseline,mode=mode)
             if not aggregate:
-                #df=parameters_to_pandas(baseline)
-                #newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
-                #newdf.columns = df.columns
                 newdf=pd.DataFrame([])
                 newdf['explanation'] =np.repeat('custom', len(row_summary), axis=0)
                 new_row_summary = pd.concat([row_summary,newdf], axis = 1)
@@ -90,7 +85,7 @@ class ComplexityEvaluation(Evaluation):
         return SummaryTable
         
 
-    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None,save_exp=False):
+    def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path='./Results/Explanation',save_exp=False):
         '''
         Evaluates Complexity on Sythetic Data.
         Attributes: 
@@ -124,7 +119,7 @@ class ComplexityEvaluation(Evaluation):
         SummaryTable=pd.DataFrame([])
         number= 0 
         total = len(list(data_full.keys())) *len(self.classification_models) * len(self.explainers)
-        for name in data_full.keys():#range(len(self.datagenerationtypes)):
+        for name in data_full.keys():
                 
                 splitting = name.split('_')
                 typ=splitting[-6]
@@ -136,7 +131,6 @@ class ComplexityEvaluation(Evaluation):
                 shape_1 = data.shape[1]
                 shape_2 = data.shape[2]
 
-                raw_data=np.copy(data)
                 data, test_loaderRNN, scaler = scaling(data, label, shape_1, shape_2)
                 d_train, train_loaderRNN, scaler = scaling(d_train, l_train, shape_1, shape_2)
 
@@ -151,12 +145,13 @@ class ComplexityEvaluation(Evaluation):
                             number =number+1
                             continue  
                         '''Load Model and Manipulate Explainer'''
-                        mod= torch.load(f'./XTSCBench/ClassificationModels/models_new/{m}/{modelName}',map_location='cpu')
+                        mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
                         old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
                             print('Predictor returns constant predictoe')
+                            number +=1
                             continue
                         
                         '''Calculate Explanations'''
@@ -164,12 +159,12 @@ class ComplexityEvaluation(Evaluation):
                         label=label_full[name][:num_items]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
+                        if explanation_path is None or f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(old_explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
                             res=np.array(res)
                             if save_exp is not None:
                                 s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
-                                with open(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
+                                with open(f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
                                     try:
                                         np.save(f,np.array(res))
                                     except: 
@@ -194,7 +189,6 @@ class ComplexityEvaluation(Evaluation):
                             res=res.reshape(-1,shape_1,shape_2)
 
                         label=label.astype(int)
-                        #TODO Eliminate  if 
                         row_summary=get_complexity_metrics(data[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
                     
                         number =number+1
