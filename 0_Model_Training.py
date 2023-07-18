@@ -28,7 +28,7 @@ rnn=0.1
 hidden_size =10 
 n_pred_classes=2
 
-for i in ['multivariate']: 
+for i in ['multivariate']: #['univariate']
     #XTSCBench/data/univariate/Training/data
     path= os.listdir(f'./XTSCBench/data/{i}/Training/data')
     for name in path: 
