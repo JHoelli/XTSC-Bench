@@ -31,4 +31,4 @@ if __name__=='__main__':
     data_dir=['./Benchmarking/data/multivariate']
     
     bm=RunExp(explainers, typ='_')
-    bm.calculate_explanations(num_items=20, save_expl=True,explanation_path=None)
+    bm.calculate_explanations(num_items=20)
