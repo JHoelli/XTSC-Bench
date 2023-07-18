@@ -120,3 +120,7 @@
 118,LSTM_ATT,SimulatedTrainingData_PostionalTime_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 119,CNN,SimulatedTrainingData_PostionalTime_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 120,LSTM,SimulatedTrainingData_PostionalTime_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+121,LSTM_ATT,SimulatedTrainingData_PostionalTime_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+122,CNN,SimulatedTrainingData_PostionalTime_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+123,LSTM,SimulatedTrainingData_PostionalTime_PseudoPeriodic_F_50_TS_50.npy,0.53,0.53,1.0,0.53,0.5
+124,LSTM_ATT,SimulatedTrainingData_PostionalTime_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
