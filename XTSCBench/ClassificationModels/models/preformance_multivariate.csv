@@ -144,4 +144,9 @@
 142,LSTM_ATT,SimulatedTrainingData_RareFeature_PseudoPeriodic_F_50_TS_50.npy,0.55,0.55,1.0,0.55,0.5
 143,CNN,SimulatedTrainingData_RareFeature_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 144,LSTM,SimulatedTrainingData_RareTime_AutoRegressive_F_50_TS_50.npy,0.99,0.99,1.0,0.9777777777777776,0.9910714285714284
-145,LSTM_ATT,SimulatedTrainingData_RareTime_AutoRegressive_F_50_TS_50.npy,0.95,0.9500000000000001,0.9090909090909091,0.975609756097561,0.9456168831168831
+145,LSTM_ATT,SimulatedTrainingData_RareTime_AutoRegressive_F_50_TS_50.npy,0.95,0.95,0.9090909090909092,0.975609756097561,0.9456168831168832
+146,CNN,SimulatedTrainingData_RareTime_AutoRegressive_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+147,LSTM,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,0.51,0.51,0.72,0.5070422535211268,0.51
+148,LSTM_ATT,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+149,CNN,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+150,LSTM,SimulatedTrainingData_RareTime_CAR_F_50_TS_50.npy,0.54,0.54,0.5283018867924528,0.5714285714285714,0.5407466880770775
