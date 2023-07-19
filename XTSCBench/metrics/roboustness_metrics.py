@@ -71,14 +71,14 @@ def get_roboustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mod
     explainer=Quantus_Wrapper(explainer, mode).make_callable
     df = pd.DataFrame([])
     #print('Labels ', labels)
-    try:
-        df['AverageSensitivity']=np.array(AverageSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
-    except: 
-        df['AverageSensitivity']= np.array(np.repeat(np.nan,len(original)))
-    try:
-        df['MaxSensitivity']=np.array(MaxSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
-    except: 
-         df['MaxSensitivity']=np.array(np.repeat(np.nan,len(original)))
+    #try:
+    df['AverageSensitivity']=np.array(AverageSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
+    #except: 
+    #    df['AverageSensitivity']= np.array(np.repeat(np.nan,len(original)))
+    #try:
+    df['MaxSensitivity']=np.array(MaxSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
+    #except: 
+    #     df['MaxSensitivity']=np.array(np.repeat(np.nan,len(original)))
     
     if additional_metrics is not None: 
         for add in additional_metrics:
