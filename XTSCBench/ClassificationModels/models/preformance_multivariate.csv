@@ -150,3 +150,9 @@
 148,LSTM_ATT,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 149,CNN,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 150,LSTM,SimulatedTrainingData_RareTime_CAR_F_50_TS_50.npy,0.54,0.54,0.5283018867924528,0.5714285714285714,0.5407466880770775
+151,LSTM_ATT,SimulatedTrainingData_RareTime_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+152,CNN,SimulatedTrainingData_RareTime_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+153,LSTM,SimulatedTrainingData_RareTime_Harmonic_F_50_TS_50.npy,0.55,0.55,0.7368421052631579,0.5833333333333334,0.5195838433292534
+154,LSTM_ATT,SimulatedTrainingData_RareTime_Harmonic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+155,CNN,SimulatedTrainingData_RareTime_Harmonic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+156,LSTM,SimulatedTrainingData_RareTime_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0

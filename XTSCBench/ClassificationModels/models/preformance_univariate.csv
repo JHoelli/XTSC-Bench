@@ -6,3 +6,6 @@
 4,LSTM_ATT,SimulatedTrainingData_Middle_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 5,CNN,SimulatedTrainingData_Middle_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 6,LSTM,SimulatedTrainingData_Middle_CAR_F_1_TS_50.npy,0.62,0.62,1.0,0.6,0.5581395348837209
+7,LSTM_ATT,SimulatedTrainingData_Middle_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+8,CNN,SimulatedTrainingData_Middle_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+9,LSTM,SimulatedTrainingData_Middle_Harmonic_F_1_TS_50.npy,0.99,0.99,1.0,0.9807692307692307,0.9897959183673469
