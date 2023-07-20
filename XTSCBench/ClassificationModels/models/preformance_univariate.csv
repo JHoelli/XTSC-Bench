@@ -159,3 +159,10 @@
 157,LSTM_ATT,SimulatedTrainingData_RareFeature_AutoRegressive_F_1_TS_50.npy,0.85,0.85,0.9272727272727272,0.8225806451612904,0.8414141414141414
 158,CNN,SimulatedTrainingData_RareFeature_AutoRegressive_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 159,LSTM,SimulatedTrainingData_RareFeature_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+160,LSTM_ATT,SimulatedTrainingData_RareFeature_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+161,CNN,SimulatedTrainingData_RareFeature_Box_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+162,LSTM,SimulatedTrainingData_RareFeature_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+163,LSTM_ATT,SimulatedTrainingData_RareFeature_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+164,CNN,SimulatedTrainingData_RareFeature_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+165,LSTM,SimulatedTrainingData_RareFeature_Harmonic_F_1_TS_50.npy,0.99,0.99,0.975609756097561,1.0,0.9878048780487804
+166,LSTM_ATT,SimulatedTrainingData_RareFeature_Harmonic_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
