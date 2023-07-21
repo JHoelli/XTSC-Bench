@@ -13,7 +13,6 @@ if __name__=='__main__':
 
     explainers=[
                 LEFTIST(None,data=(np.array([[1]]),np.array([[1]])),mode='feat', backend='PYT',learning_process_name='Lime',transform_name='random'),
-                LEFTIST(None,data=(np.array([[1]]),np.array([[1]])),mode='feat', backend='PYT',learning_process_name='SHAP',transform_name='random'),
                 Saliency_PTY(None, None,None, method='GRAD', mode='feat', tsr=True),
                 Saliency_PTY(None, None,None, method='GS', mode='feat', tsr=True),
                 Saliency_PTY(None, None,None, method='SG', mode='feat', tsr=True),
@@ -40,9 +39,7 @@ if __name__=='__main__':
     #Only CNN
 
     explainers=[
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NUN_CF'),
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='dtw_bary_center'),
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NG') ,                      
+                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NUN_CF'),                   
                 ]
 
     data_dir=['./XTSCBench/data/univariate']
