@@ -164,7 +164,7 @@ class ReliabilityEvaluation (Evaluation):
                         meta=meta_full[name][:num_items]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
+                        if explanation_path is None or f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod)
                             #TODO add save
                             res=np.array(res)

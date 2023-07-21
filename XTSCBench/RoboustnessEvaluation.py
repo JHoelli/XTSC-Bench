@@ -167,7 +167,7 @@ class RoboustnessEvaluation(Evaluation):
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')   
-                        if explanation_path is None or not os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
+                        if explanation_path is None or not os.path.isfile(f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
 
                             exp=get_explanation(data, label,shape_1, shape_2, explainer, mod)
                             exp=np.array(exp)

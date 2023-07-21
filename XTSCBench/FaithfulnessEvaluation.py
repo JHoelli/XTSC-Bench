@@ -19,13 +19,9 @@ class FaithfulnessEvaluation(Evaluation):
         super().__init__(mlmodel)
         self.models=mlmodel
         self.explainers=explainer
-        #TODO 
-
         self.metrics=metrics
 
-        #TODO IS THIS removable ? 
-        self.data=data
-        self.columns=[]
+
 
 
     def evaluate(self, items,label,model,meta, exp=None,explainer=None, generation=None, mode='time', aggregate=False):
@@ -68,7 +64,6 @@ class FaithfulnessEvaluation(Evaluation):
             if explainer is None: 
                   raise Exception("Roboustness also needs an Explainer. Although an explanation has already be given, please provide the explainer in the method call, as the Roboustness Metrics calls the explanation function.")
             row_summary= get_faithfullness_metrics(items,exp,model,label,explainer,mode=mode, generation_process=generation)
-            #get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
             if not aggregate:
                 df=parameters_to_pandas(explainer)
                 newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
@@ -79,10 +74,9 @@ class FaithfulnessEvaluation(Evaluation):
                 means = row_summary.mean().add_suffix('_mean')
                 std = row_summary.std().add_suffix('_std')
                 new= pd.concat([means,std]).to_frame().T
-                #su =pd.DataFrame([[modelName,typ,generation,m]], columns=SummaryTableCol)
                 new_row_summary=pd.concat([new,parameters_to_pandas(explainer)], axis = 1)
             SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True,axis=1)  
-        #print(SummaryTable)    
+ 
         return SummaryTable
 
         pass
@@ -130,16 +124,11 @@ class FaithfulnessEvaluation(Evaluation):
                 d_train=data_train[name]
                 l_train=label_train[name]
                 data=data_full[name][:num_items]
-                #meta_full=meta_full[name][:num_items]
-                #print('DATA',data.shape)
+ 
                 label=label_full[name][:num_items]
                 shape_1 = data.shape[1]
                 shape_2 = data.shape[2]
-                #print(meta_full[name][2])
                 subset_size=int(max((meta_full[name][0][2]-meta_full[name][0][1]),(meta_full[name][0][4]-meta_full[name][0][3])))
-                #print('Subset_Size',subset_size)
-                #import sys 
-                #sys.exit(1)
 
                 raw_data=np.copy(data)
                 data, test_loaderRNN, scaler = scaling(data, label, shape_1, shape_2)
@@ -156,8 +145,7 @@ class FaithfulnessEvaluation(Evaluation):
                             number =number+1
                             print('Entry exists')
                             continue  
-                        #import sys 
-                        #sys.exit(1) 
+
                         '''Load Model and Manipulate Explainer'''
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=True)
@@ -172,7 +160,8 @@ class FaithfulnessEvaluation(Evaluation):
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
-                        if explanation_path is None or f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
+
+                        if explanation_path is None or f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
                             res=np.array(res)
                             if save_exp is not None:
@@ -247,9 +236,6 @@ class FaithfulnessEvaluation(Evaluation):
                             SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
                         else: 
                             SummaryTable=new_row_summary
-
-
-
 
                         if save is None:
                             SummaryTable.to_csv('temp.csv')

@@ -14,35 +14,6 @@ from quantus.helpers.utils import (
 )
 # USE Quantus
 
-def time_series_pertubation(arr: np.array, **kwargs) -> np.array:
-    """
-    Time Series Specific Pertubation
-
-    Parameters
-    ----------
-    arr: np.ndarray
-         Array to be perturbed.
-    kwargs: optional
-        Keyword arguments.
-
-    Returns
-    -------
-    arr: np.ndarray
-         Array unperturbed.
-
-    #TODO 
-    """
-    return arr
-
-def uniform_noise_parameter():
-    '''
-        lower_bound: float
-            The lower bound for uniform sampling.
-    upper_bound: float, optional
-            The upper bound for uniform sampling.
-            '''
-    pass
-
 def syntheticBaseline(dataGenerationProcess, NumTimeSteps,NumFeatures, mode):
     sample= generateNewSample(dataGenerationProcess, sampler="irregular", NumTimeSteps= NumTimeSteps, NumFeatures=NumFeatures)
     #print('Sample', sample.shape)
