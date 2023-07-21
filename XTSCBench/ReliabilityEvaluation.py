@@ -45,9 +45,9 @@ class ReliabilityEvaluation (Evaluation):
         data_shape_2= items.shape[-1]
         
         for baseline in self.explainers:      
-            exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
-            exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
-            row_summary=get_reliability_metrics(items, exp,model,label,meta,(data_shape_1,data_shape_2))
+            exp_new=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
+            exp_new=np.array(exp_new).reshape(-1, data_shape_1,data_shape_2)
+            row_summary=get_reliability_metrics(items, exp_new,model,label,meta,(data_shape_1,data_shape_2),synthtic=False)
             if not aggregate:
                 #df=parameters_to_pandas(baseline)
                 newdf = pd.DataFrame([])#np.repeat(df.values, len(row_summary), axis=0))
@@ -63,7 +63,7 @@ class ReliabilityEvaluation (Evaluation):
             SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
 
         if exp is not None: 
-            row_summary= get_reliability_metrics(items, exp,model,label,meta,(data_shape_1,data_shape_2))
+            row_summary= get_reliability_metrics(items, exp,model,label,meta,(data_shape_1,data_shape_2),synthtic=False)
             #get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
             if not aggregate:
                 #df=parameters_to_pandas(baseline)

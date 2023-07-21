@@ -12,7 +12,7 @@ def quantus_localization_wapper(metric,mlmodel,data,labels, exp,masks):
     return  metric( model=mlmodel,x_batch=data, y_batch=labels,  a_batch=exp, s_batch=masks, device='CPU')
 
 
-def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', additional_metrics=None):
+def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', additional_metrics=None, synthtic=True):
 
     labels=labels.astype(int)
     df = pd.DataFrame([])
@@ -26,7 +26,10 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
         return df
 
     exp= exp.astype(np.float64)
-    masks=get_reference_samples(meta,data,shape).reshape(data.shape[0],data.shape[2],data.shape[1])
+    if synthtic:
+        masks=get_reference_samples(meta,data,shape).reshape(data.shape[0],data.shape[2],data.shape[1])
+    else:
+        masks=meta
 
     exp=np.array(exp).reshape(data.shape[0],1,data.shape[2]*data.shape[1])
     masks=np.array(masks).reshape(data.shape[0],1,data.shape[2]*data.shape[1])
