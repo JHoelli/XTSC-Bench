@@ -1,0 +1,4 @@
+,Pointing_mean,Relevance Rank_mean,Relevance Mass_mean,AuC_mean,Pointing_std,Relevance Rank_std,Relevance Mass_std,AuC_std,nb_neighbors,transform_name,segmentator_name,learning_process_name,nb_interpretable_feature,explanation_size,Datasets,Typ,Generation,models,method,tsr
+0,0.95,0.565,0.7,0.5333333333333333,0.22360679774997902,0.05668730274406835,0.4701623459816272,0.09424212936563149,1000,random,uniform,SHAP,10,1,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,Middle,AutoRegressive,CNN,,
+1,0.25,0.5583333333333333,0.0,0.4375,0.4442616583193193,0.044426165831931916,0.0,0.11106541457982982,1000,random,uniform,Lime,10,1,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,Middle,AutoRegressive,CNN,,
+2,0.75,0.47000000000000003,0.5244731301192294,0.37970833333333326,0.4442616583193193,0.06203187258477909,0.10775480202208715,0.09374840154582723,,,,,,,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,Middle,AutoRegressive,CNN,GRAD,True
