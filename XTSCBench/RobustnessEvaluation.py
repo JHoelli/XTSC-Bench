@@ -53,7 +53,7 @@ class RobustnessEvaluation(Evaluation):
             #    exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
             #else:
             #    exp=np.array(exp).reshape(-1, data_shape_2,data_shape_1)
-            row_summary=get_roboustness_metrics(items,res,model,labels=label,explainer=baseline,mode='time', additional_metrics=None)
+            row_summary=get_robustness_metrics(items,res,model,labels=label,explainer=baseline,mode='time', additional_metrics=None)
             #print(row_summary)
             if not aggregate:
                 df=parameters_to_pandas(baseline)
@@ -75,7 +75,7 @@ class RobustnessEvaluation(Evaluation):
         if exp is not None: 
             if explainer is None: 
                   raise Exception("Roboustness also needs an Explainer. Although an explanation has already be given, please provide the explainer in the method call, as the Roboustness Metrics calls the explanation function.") 
-            row_summary=get_roboustness_metrics(items,exp,model,label,explainer,mode=mode)
+            row_summary=get_robustness_metrics(items,exp,model,label,explainer,mode=mode)
             if not aggregate:
                 df=parameters_to_pandas(explainer)
                 newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
@@ -209,7 +209,7 @@ class RobustnessEvaluation(Evaluation):
                             res=res.reshape(-1,1,shape_1,shape_2)
 
                         label=label.astype(int)
-                        row_summary=get_roboustness_metrics(data_man[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
+                        row_summary=get_robustness_metrics(data_man[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
 
 
                         '''Savings Section'''

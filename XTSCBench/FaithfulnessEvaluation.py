@@ -44,9 +44,9 @@ class FaithfulnessEvaluation(Evaluation):
         data_shape_2= items.shape[-1]
         
         for baseline in self.explainers:    
-            exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
-            exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
-            row_summary= get_faithfullness_metrics(items,exp,model,label,baseline,mode=mode, generation_process=generation)
+            exp_n=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
+            exp_n=np.array(exp_n).reshape(-1, data_shape_1,data_shape_2)
+            row_summary= get_faithfullness_metrics(items,exp_n,model,label,baseline,mode=mode, generation_process=generation)
             if not aggregate:
                 df=parameters_to_pandas(baseline)
                 newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
@@ -59,20 +59,22 @@ class FaithfulnessEvaluation(Evaluation):
                 new= pd.concat([means,std]).to_frame().T
                 new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
             SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
-        #TODO SINGLE ITEM
-        #row_summary= get_faithfullness_metrics(items,exp,model,label,explainer,mode=mode, generation_process=generation)
-        #if not aggregate:
-        #        df=parameters_to_pandas(explainer)
-        #        newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
-        #        newdf.columns = df.columns
-        #        newdf['explanation'] =np.repeat(str(type(explainer)).split('.')[-1], len(newdf), axis=0)
-        #        new_row_summary = pd.concat([row_summary,newdf], axis = 1)
-        #    if aggregate:
-        #        means = row_summary.mean().add_suffix('_mean')
-        #        std = row_summary.std().add_suffix('_std')
-        #        new= pd.concat([means,std]).to_frame().T
-        #        new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
-        #    SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True,axis=1)  
+        if exp is not None: 
+            if explainer is None: 
+                  raise Exception("Roboustness also needs an Explainer. Although an explanation has already be given, please provide the explainer in the method call, as the Roboustness Metrics calls the explanation function.") 
+            row_summary= get_faithfullness_metrics(items,exp,model,label,explainer,mode=mode, generation_process=generation)
+            if not aggregate:
+                df=parameters_to_pandas(explainer)
+                newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
+                newdf.columns = df.columns
+                newdf['explanation'] =np.repeat(str(type(explainer)).split('.')[-1], len(newdf), axis=0)
+                new_row_summary = pd.concat([row_summary,newdf], axis = 1)
+            if aggregate:
+                means = row_summary.mean().add_suffix('_mean')
+                std = row_summary.std().add_suffix('_std')
+                new= pd.concat([means,std]).to_frame().T
+                new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
+            SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True,axis=1)  
  
         return SummaryTable
 
