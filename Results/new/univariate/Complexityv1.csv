@@ -1,0 +1,2 @@
+,complexity_mean,complexity_std,nb_neighbors,transform_name,segmentator_name,learning_process_name,nb_interpretable_feature,explanation_size,Datasets,Typ,Generation,models
+0,1.6094379124341003,2.278129578503827e-16,1000,random,uniform,Lime,10,1,SimulatedTrainingData_Middle_AutoRegressive_F_1_TS_50.npy,Middle,AutoRegressive,CNN
