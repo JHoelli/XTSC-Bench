@@ -66,7 +66,6 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
             Callable: the newly manipulated explainer Instance
         
         '''
-        #print('manipulate')
         di=new_kwargs(saliency)
 
         di['model']=mod

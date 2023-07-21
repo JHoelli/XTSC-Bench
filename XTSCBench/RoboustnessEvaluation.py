@@ -148,7 +148,7 @@ class RoboustnessEvaluation(Evaluation):
                 for m in self.classification_models:
                     for explainer in self.explainers:
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
-
+                        label=label_full[name][:num_items]
                         '''Check wheather Calculation already exists'''
                         if does_entry_already_exist(old_data, m, generation, typ, modelName):
                             number =number+1
@@ -156,10 +156,10 @@ class RoboustnessEvaluation(Evaluation):
                             continue  
                         '''Load Model and Manipulate Explainer'''
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')  
-                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
+                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=False)
 
                         if type(explainer) ==str: 
-                            print('Predictor returns constant predictoe')
+                            print('Predictor returns constant predictor')
                             number+=1
                             continue
                         
@@ -167,7 +167,7 @@ class RoboustnessEvaluation(Evaluation):
                         y_pred=[]
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')   
-                        if explanation_path is None or not os.path.isfile(f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
+                        if explanation_path is None or not os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
 
                             exp=get_explanation(data, label,shape_1, shape_2, explainer, mod)
                             exp=np.array(exp)
@@ -191,7 +191,7 @@ class RoboustnessEvaluation(Evaluation):
                         data_man=data
                         if 'CF' in str(type(explainer)):
                             res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label)
-
+                        res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label,cf_man=False)
                         if len(res)== 0:
                             continue
                        
