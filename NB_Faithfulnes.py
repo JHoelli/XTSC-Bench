@@ -4,7 +4,7 @@ from TSInterpret.InterpretabilityModels.counterfactual.TSEvoCF import TSEvo
 import torch 
 from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
 from XTSCBench.ClassificationModels.LSTM import LSTM
-from XTSCBench.RoboustnessEvaluation import RoboustnessEvaluation
+from XTSCBench.FaithfulnessEvaluation import FaithfulnessEvaluation
 from tslearn.datasets import UCR_UEA_datasets
 import sklearn
 import numpy as np 
@@ -36,5 +36,5 @@ import XTSCBench
 importlib.reload(XTSCBench)
 # For use with CNN set mode ='feat'
 explainer =  [TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10),Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True)]
-bm=RoboustnessEvaluation(explainer=explainer,mlmodel=None)
+bm=FaithfulnessEvaluation(explainer=explainer,mlmodel=None)
 print(bm.evaluate(test_x[0:2], y[0:2],model,exp=None, mode='time',aggregate=True))

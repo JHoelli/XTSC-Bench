@@ -6,11 +6,11 @@ import numpy as np
 from XTSCBench.metrics.synthetic_helper import get_preds,load_synthetic_data,manipulate_exp_method,scaling, get_explanation,does_entry_already_exist
 import os
 from XTSCBench.metrics.metrics_helper import parameters_to_pandas, new_kwargs
-from XTSCBench.metrics.roboustness_metrics import get_roboustness_metrics
+from XTSCBench.metrics.robustness_metrics import get_robustness_metrics
 import quantus
 from XTSCBench.Helper import  counterfactual_manipulator
 
-class RoboustnessEvaluation(Evaluation):
+class RobustnessEvaluation(Evaluation):
     """
     #TODO Absprung in Quantus
  """

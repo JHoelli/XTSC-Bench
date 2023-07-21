@@ -48,7 +48,7 @@ class model_wrapper(torch.nn.Module):
 
 
 
-def get_roboustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
+def get_robustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
     #TODO Put in CORRECT MODE
     exp= np.array(exp)
     original=np.array(original)

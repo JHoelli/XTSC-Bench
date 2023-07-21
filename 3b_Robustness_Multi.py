@@ -1,4 +1,4 @@
-from XTSCBench.RoboustnessEvaluation import RoboustnessEvaluation
+from XTSCBench.RobustnessEvaluation import RoboustnessEvaluation
 from TSInterpret.InterpretabilityModels.Saliency.TSR import TSR, Saliency_PTY
 from TSInterpret.InterpretabilityModels.counterfactual.TSEvoCF import TSEvo
 import numpy as np
@@ -18,8 +18,7 @@ if __name__=='__main__':
                 Saliency_PTY(None, None,None, method='GS', mode='feat', tsr=False),
                 Saliency_PTY(None, None,None, method='SG', mode='feat', tsr=False),
                 Saliency_PTY(None, None,None, method='FO', mode='feat', tsr=False),
-                TSEvo(model= None,data=(np.array([0]),[0]), mode = 'feat',backend='PYT',epochs=100),
-                #AtesCF(model=None,data=(np.array([0]),[0]),backend='PYT',mode='feat', method= 'opt',max_attempts=1000,     #max_iter=1000),
+                TSEvo(model= None,data=(np.array([0]),[0]), mode = 'feat',backend='PYT',epochs=100)
                 
                 
                 

@@ -1,4 +1,4 @@
-from XTSCBench.RoboustnessEvaluation import RoboustnessEvaluation
+from XTSCBench.RobustnessEvaluation import RoboustnessEvaluation
 from TSInterpret.InterpretabilityModels.Saliency.TSR import TSR, Saliency_PTY
 import matplotlib.pyplot as plt
 from XTSCBench.metrics.synthetic_helper import load_synthetic_data
@@ -39,9 +39,7 @@ if __name__=='__main__':
     #Only CNN
 
     explainers=[
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NUN_CF'),
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='dtw_bary_center'),
-                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NG') ,                
+                NativeGuideCF(model=model,data=(data,[0]), backend='PYT', mode='feat',method='NUN_CF'),            
                 ]
 
     bm=RoboustnessEvaluation(None,explainers,(None,[0]))
