@@ -47,7 +47,7 @@ class ComplexityEvaluation(Evaluation):
         for baseline in self.explainers:    
             exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
             exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
-            row_summary=get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
+            row_summary=get_complexity_metrics(items,exp,model,label,baseline,mode=mode, additional_metrics=self.metrics)
             #print(row_summary)
             if not aggregate:
                 df=parameters_to_pandas(baseline)

@@ -13,8 +13,9 @@ def complexity(mod,data,label, res,exp):
 
 
 
-def quantus_complexity_wrapper(metric, mod,data,label, res,exp,channel_first):
-    return  metric( model=mod,  x_batch=data,y_batch=label, a_batch=res, device='cpu',explain_func=exp,channel_first=channel_first)
+def quantus_complexity_wrapper(metric, mod,data,label, res,exp):
+    #TODO Add KWARGS Possibility
+    return  metric(disable_warnings=True)( model=mod,  x_batch=data,y_batch=label, a_batch=res, device='cpu',explain_func=exp)
 
 
 def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
@@ -34,6 +35,7 @@ def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode
 
     if additional_metrics is not None: 
         for add in additional_metrics:
-            df[f'{str(type(add))}']= np.array(quantus_complexity_wrapper(mlmodel,original,labels, exp,explainer))
+            #metric, mod,data,label, res,exp)
+            df[f'{str(add)}']= np.array(quantus_complexity_wrapper(add,mlmodel,original,labels, exp,explainer))
 
     return df

@@ -5,6 +5,7 @@ import torch
 from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
 from XTSCBench.ClassificationModels.LSTM import LSTM
 from XTSCBench.ComplexityEvaluation import ComplexityEvaluation
+from quantus.metrics.complexity.effective_complexity import EffectiveComplexity
 from tslearn.datasets import UCR_UEA_datasets
 import sklearn
 import numpy as np 
@@ -25,7 +26,7 @@ train_loader = torch.utils.data.DataLoader(train_dataset,batch_size=16,shuffle=T
 test_loader = torch.utils.data.DataLoader(test_dataset,batch_size=1,shuffle=False)
 if os.path.isfile('temp_lstm'):
     model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
-    model.load_state_dict(torch.load( 'temp_lstm'))
+    model = torch.load( 'temp_lstm')
 else:
     model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
     fit(model,train_loader,test_loader)
@@ -33,6 +34,6 @@ else:
 model.eval()
 # For use with CNN set mode ='feat'
 explainer =  [Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True),TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
-bm=ComplexityEvaluation(explainer=explainer)
+bm=ComplexityEvaluation(explainer=explainer, metrics= [EffectiveComplexity])
 #tems,label,model, exp='None', mode='time', aggregate=False
 print(bm.evaluate(test_x[0:2], np.argmax(test_y[0:2],axis=1),model, mode='time',aggregate=True))

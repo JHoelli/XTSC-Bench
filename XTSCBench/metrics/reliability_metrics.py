@@ -9,7 +9,7 @@ from XTSCBench.metrics.synthetic_metrics import get_reference_samples
 
 
 def quantus_localization_wapper(metric,mlmodel,data,labels, exp,masks):
-    return  metric( model=mlmodel,x_batch=data, y_batch=labels,  a_batch=exp, s_batch=masks, device='CPU')
+    return  metric(disable_warnings=True)( model=mlmodel,x_batch=data, y_batch=labels,  a_batch=exp, s_batch=masks, device='CPU')
 
 
 def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', additional_metrics=None, synthtic=True):
@@ -44,7 +44,7 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
         Auc=np.repeat(np.nan,len(rank))
     if additional_metrics is not None: 
         for add in additional_metrics:
-            df[f'{str(type(add))}']= np.array(quantus_localization_wapper(add,mlmodel,data,labels, exp,masks))
+            df[f'{str(add)}']= np.array(quantus_localization_wapper(add,mlmodel,data,labels, exp,masks))
     if np.all((exp==0.0)):
         return pd.DataFrame([np.nan,np.nan, np.nan],columns=["Poining", "Relevance Rank","Relevance Mass","AuC"])
     df['Pointing']=pointing
