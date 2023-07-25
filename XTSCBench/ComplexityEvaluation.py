@@ -67,7 +67,7 @@ class ComplexityEvaluation(Evaluation):
                 SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
 
         if expla is not None: 
-            row_summary=get_complexity_metrics(items,expla,model,label,baseline,mode=mode)
+            row_summary=get_complexity_metrics(items,expla,model,label,baseline,mode=mode, additional_metrics=self.metrics)
             if not aggregate:
                 newdf=pd.DataFrame([])
                 newdf['explanation'] =np.repeat('custom', len(row_summary), axis=0)

@@ -5,6 +5,7 @@ import torch
 from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
 from XTSCBench.ClassificationModels.LSTM import LSTM
 from XTSCBench.ReliabilityEvaluation import ReliabilityEvaluation
+from quantus.metrics.localisation.auc import AUC
 from tslearn.datasets import UCR_UEA_datasets
 import sklearn
 import numpy as np 
@@ -36,7 +37,7 @@ import XTSCBench
 importlib.reload(XTSCBench)
 # For use with CNN set mode ='feat'
 explainer =  [TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10),Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True)]
-bm=ReliabilityEvaluation(explainer=explainer,mlmodel=None)
+bm=ReliabilityEvaluation(explainer=explainer,mlmodel=None, metrics=[AUC])
 #CAREFUL THIS IS AN ASSUMPTION
 meta=np.zeros_like(test_x[0:2])
 meta[:,10:20]= np.ones_like(meta[:,10:20])
