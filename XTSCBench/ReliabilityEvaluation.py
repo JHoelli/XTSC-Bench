@@ -49,18 +49,21 @@ class ReliabilityEvaluation (Evaluation):
             exp_new=np.array(exp_new).reshape(-1, data_shape_1,data_shape_2)
             row_summary=get_reliability_metrics(items, exp_new,model,label,meta,(data_shape_1,data_shape_2),synthtic=False,additional_metrics=self.metrics)
             if not aggregate:
-                #df=parameters_to_pandas(baseline)
-                newdf = pd.DataFrame([])#np.repeat(df.values, len(row_summary), axis=0))
-                #newdf.columns = df.columns
-                newdf['explanation'] =np.repeat(str(type(baseline)).split('.')[-1], len(row_summary), axis=0)
+                df=parameters_to_pandas(baseline)
+                newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
+                newdf.columns = df.columns
+                newdf['explanation'] =np.repeat(str(type(baseline)).split('.')[-1], len(newdf), axis=0)
                 new_row_summary = pd.concat([row_summary,newdf], axis = 1)
             if aggregate:
                 means = row_summary.mean().add_suffix('_mean')
                 std = row_summary.std().add_suffix('_std')
-                new_row_summary= pd.concat([means,std]).to_frame().T
-                new_row_summary['explanation']=['custom']
-                #new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
-            SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
+                new= pd.concat([means,std]).to_frame().T
+                new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
+ 
+            if len(SummaryTable)== 0:
+                SummaryTable=new_row_summary
+            else:
+                SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
 
         if exp is not None: 
             row_summary= get_reliability_metrics(items, exp,model,label,meta,(data_shape_1,data_shape_2),synthtic=False, additional_metrics=self.metrics)
