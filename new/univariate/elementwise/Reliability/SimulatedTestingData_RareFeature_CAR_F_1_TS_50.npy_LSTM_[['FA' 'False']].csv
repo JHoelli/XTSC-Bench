@@ -1,0 +1,21 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,method,tsr,explanation
+0,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+1,False,0.9,0.8117283929041147,0.6925,FA,False,Saliency_PTY'>
+2,False,0.875,0.7931034481429742,0.58,FA,False,Saliency_PTY'>
+3,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+4,True,0.9,0.8594704704065941,0.7262500000000001,FA,False,Saliency_PTY'>
+5,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+6,True,0.85,0.835205994323175,0.65,FA,False,Saliency_PTY'>
+7,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+8,True,0.875,0.8341708526239923,0.635,FA,False,Saliency_PTY'>
+9,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+10,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+11,True,0.9,0.8746312690970399,0.78125,FA,False,Saliency_PTY'>
+12,False,0.825,0.7714285714285715,0.53,FA,False,Saliency_PTY'>
+13,False,0.85,0.8287937762777919,0.65625,FA,False,Saliency_PTY'>
+14,True,0.9,0.8397212559446721,0.68625,FA,False,Saliency_PTY'>
+15,False,0.8,0.7610619469026549,0.52625,FA,False,Saliency_PTY'>
+16,False,0.85,0.773972602739726,0.53,FA,False,Saliency_PTY'>
+17,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+18,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>
+19,False,0.775,0.0,0.45,FA,False,Saliency_PTY'>

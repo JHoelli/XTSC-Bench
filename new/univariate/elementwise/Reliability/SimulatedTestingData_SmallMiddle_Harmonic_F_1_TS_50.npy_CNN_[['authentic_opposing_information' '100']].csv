@@ -1,0 +1,21 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,transformer,epochs,explanation
+0,True,0.35714285714285715,0.3167595872128572,0.6031746031746031,authentic_opposing_information,100,TSEvo'>
+1,False,0.0,0.18987654869563525,0.2619047619047619,authentic_opposing_information,100,TSEvo'>
+2,False,0.0,0.20066898802322838,0.2043650793650794,authentic_opposing_information,100,TSEvo'>
+3,False,0.0,0.22541738128402858,0.3263888888888889,authentic_opposing_information,100,TSEvo'>
+4,False,0.0,0.19902313467110283,0.25992063492063494,authentic_opposing_information,100,TSEvo'>
+5,False,0.0,0.19696546134170306,0.21031746031746032,authentic_opposing_information,100,TSEvo'>
+6,False,0.0,0.22219817104564127,0.32638888888888884,authentic_opposing_information,100,TSEvo'>
+7,True,0.35714285714285715,0.3098198185677127,0.5823412698412698,authentic_opposing_information,100,TSEvo'>
+8,False,0.0,0.19680124563490992,0.25,authentic_opposing_information,100,TSEvo'>
+9,False,0.0,0.19105934841755143,0.26190476190476186,authentic_opposing_information,100,TSEvo'>
+10,True,0.5,0.34512383368215105,0.7142857142857143,authentic_opposing_information,100,TSEvo'>
+11,False,0.07142857142857142,0.2553383957332285,0.4097222222222222,authentic_opposing_information,100,TSEvo'>
+12,True,0.2857142857142857,0.2902462205529281,0.5109126984126984,authentic_opposing_information,100,TSEvo'>
+13,True,0.5,0.34267293122877795,0.6825396825396826,authentic_opposing_information,100,TSEvo'>
+14,False,0.07142857142857142,0.26229359481993775,0.45634920634920634,authentic_opposing_information,100,TSEvo'>
+15,True,0.2857142857142857,0.30535612079360036,0.5476190476190477,authentic_opposing_information,100,TSEvo'>
+16,False,0.0,0.20335476562260257,0.2361111111111111,authentic_opposing_information,100,TSEvo'>
+17,False,0.0,0.189787446640571,0.23015873015873017,authentic_opposing_information,100,TSEvo'>
+18,False,0.0,0.18539200065715675,0.2113095238095238,authentic_opposing_information,100,TSEvo'>
+19,False,0.2857142857142857,0.2977999025722473,0.5198412698412698,authentic_opposing_information,100,TSEvo'>

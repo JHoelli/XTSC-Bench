@@ -1,0 +1,5 @@
+,monoton_synthetic_mean,faithfulness_correlation_synthetic_flex_mean,monoton_synthetic_std,faithfulness_correlation_synthetic_flex_std,method,tsr,Datasets,Typ,Generation,models
+0,1.0,0.013663670189510523,0.0,0.11413935113036767,SG,True,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,Middle,AutoRegressive,CNN
+1,1.0,-0.0327991156621022,0.0,0.08265834251162388,GS,True,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,Middle,AutoRegressive,CNN
+2,1.0,0.06947117059484668,0.0,0.1422958127954454,IG,True,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,Middle,AutoRegressive,CNN
+3,1.0,0.1278277244960418,0.0,0.16608046446893437,GRAD,True,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,Middle,AutoRegressive,CNN
