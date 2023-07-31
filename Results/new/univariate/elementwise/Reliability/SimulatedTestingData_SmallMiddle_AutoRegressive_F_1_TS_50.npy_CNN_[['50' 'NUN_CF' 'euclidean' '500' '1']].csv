@@ -1,0 +1,5 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,ts_length,method,distance_measure,max_iter,n_neighbors,explanation
+0,False,0.0,1.0186320301576983,0.19642857142857142,50,NUN_CF,euclidean,500,1,NativeGuideCF'>
+1,True,0.5,0.4964087074379789,0.6547619047619048,50,NUN_CF,euclidean,500,1,NativeGuideCF'>
+2,False,0.0,0.9564960984237396,0.23412698412698413,50,NUN_CF,euclidean,500,1,NativeGuideCF'>
+3,False,0.35714285714285715,-1.368799596223444,0.6726190476190477,50,NUN_CF,euclidean,500,1,NativeGuideCF'>

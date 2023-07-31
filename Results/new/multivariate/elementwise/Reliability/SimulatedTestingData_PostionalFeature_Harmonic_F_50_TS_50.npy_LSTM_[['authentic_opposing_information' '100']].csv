@@ -1,0 +1,21 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,transformer,epochs,explanation
+0,True,0.2525,0.19000626776886595,0.6114071428571428,authentic_opposing_information,100,TSEvo'>
+1,False,0.46,0.23249477363390275,0.7829119047619046,authentic_opposing_information,100,TSEvo'>
+2,False,0.2125,0.1742800562130241,0.5491410714285714,authentic_opposing_information,100,TSEvo'>
+3,False,0.1725,0.15717187892489662,0.4863392857142857,authentic_opposing_information,100,TSEvo'>
+4,True,0.295,0.21114886309499964,0.6736595238095238,authentic_opposing_information,100,TSEvo'>
+5,False,0.185,0.15457495255778853,0.4771214285714286,authentic_opposing_information,100,TSEvo'>
+6,False,0.31,0.212137684850329,0.6790999999999999,authentic_opposing_information,100,TSEvo'>
+7,False,0.2025,0.17288208974362768,0.5423744047619047,authentic_opposing_information,100,TSEvo'>
+8,True,0.1925,0.17568695528482547,0.5581845238095238,authentic_opposing_information,100,TSEvo'>
+9,False,0.2725,0.19647471757431592,0.6277273809523809,authentic_opposing_information,100,TSEvo'>
+10,True,0.4275,0.23309027996655735,0.7641136904761905,authentic_opposing_information,100,TSEvo'>
+11,False,0.365,0.225908337381726,0.7241916666666667,authentic_opposing_information,100,TSEvo'>
+12,True,0.2525,0.19748148226631884,0.6343267857142858,authentic_opposing_information,100,TSEvo'>
+13,False,0.1275,0.1482183494704079,0.45268035714285715,authentic_opposing_information,100,TSEvo'>
+14,False,0.175,0.16172543850691765,0.5011809523809524,authentic_opposing_information,100,TSEvo'>
+15,False,0.3625,0.21569517925203482,0.7047452380952381,authentic_opposing_information,100,TSEvo'>
+16,True,0.325,0.21091014141353648,0.671042857142857,authentic_opposing_information,100,TSEvo'>
+17,True,0.2175,0.16446706325843455,0.5129440476190477,authentic_opposing_information,100,TSEvo'>
+18,True,0.3075,0.19321697079335218,0.6180583333333334,authentic_opposing_information,100,TSEvo'>
+19,True,0.275,0.20773154558667875,0.6589494047619049,authentic_opposing_information,100,TSEvo'>

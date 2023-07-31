@@ -1,0 +1,21 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,transformer,epochs,explanation
+0,False,0.0,0.1100201150878763,0.4696969696969697,authentic_opposing_information,100,TSEvo'>
+1,False,0.0,0.09919118140718887,0.3787878787878788,authentic_opposing_information,100,TSEvo'>
+2,False,0.0,0.03767827244202913,0.14204545454545453,authentic_opposing_information,100,TSEvo'>
+3,False,0.0,0.1275590095492528,0.553030303030303,authentic_opposing_information,100,TSEvo'>
+4,True,0.3333333333333333,0.1641740034152016,0.7253787878787878,authentic_opposing_information,100,TSEvo'>
+5,False,0.0,0.06205191664093767,0.17803030303030304,authentic_opposing_information,100,TSEvo'>
+6,False,0.0,0.06140034444439091,0.1950757575757576,authentic_opposing_information,100,TSEvo'>
+7,False,0.0,0.11522727272196136,0.46212121212121215,authentic_opposing_information,100,TSEvo'>
+8,True,0.16666666666666666,0.16111768738518617,0.75,authentic_opposing_information,100,TSEvo'>
+9,False,0.0,0.06360392867176794,0.2670454545454546,authentic_opposing_information,100,TSEvo'>
+10,False,0.0,0.11002305231686811,0.4659090909090909,authentic_opposing_information,100,TSEvo'>
+11,False,0.0,0.08360538168607391,0.36742424242424243,authentic_opposing_information,100,TSEvo'>
+12,False,0.16666666666666666,0.11471352748407143,0.4734848484848485,authentic_opposing_information,100,TSEvo'>
+13,False,0.0,0.10943997541688594,0.4734848484848485,authentic_opposing_information,100,TSEvo'>
+14,True,0.5,0.19049717732742152,0.8446969696969696,authentic_opposing_information,100,TSEvo'>
+15,False,0.0,0.10828422238542938,0.45454545454545453,authentic_opposing_information,100,TSEvo'>
+16,False,0.16666666666666666,0.12446757216957716,0.4886363636363636,authentic_opposing_information,100,TSEvo'>
+17,True,0.3333333333333333,0.18558050628290473,0.7348484848484849,authentic_opposing_information,100,TSEvo'>
+18,False,0.0,0.08478037498179171,0.3068181818181818,authentic_opposing_information,100,TSEvo'>
+19,False,0.0,0.1005413178134503,0.4431818181818182,authentic_opposing_information,100,TSEvo'>

@@ -1,0 +1,15 @@
+,monoton_uniform,monoton_corr_uniform,faithfulness_correlation_uniform,monoton_mean,monoton_corr_mean,faithfulness_correlation_mean,monoton_synthetic,monoton_corr_synthetic,faithfulness_correlation_synthetic,ts_length,method,distance_measure,max_iter,n_neighbors,explanation
+0,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+1,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+2,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+3,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+4,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+5,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+6,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+7,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+8,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+9,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+10,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+11,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+12,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>
+13,,,,,,,,,,50,dtw_bary_center,dtw,500,1,NativeGuideCF'>

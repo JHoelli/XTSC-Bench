@@ -1,0 +1,12 @@
+,complexity,ts_length,method,distance_measure,max_iter,n_neighbors,explanation
+0,3.7875838824297796,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+1,3.8065109428199357,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+2,3.8071975403554794,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+3,3.787745339991876,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+4,3.791462340399627,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+5,3.761211126665342,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+6,3.740095784480771,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+7,3.7789061931229466,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+8,3.8002397992591006,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+9,3.7708703727302213,50,NUN_CF,dtw,500,1,NativeGuideCF'>
+10,3.778084281690778,50,NUN_CF,dtw,500,1,NativeGuideCF'>

@@ -1,0 +1,21 @@
+,Pointing,Relevance Rank,Relevance Mass,AuC,method,tsr,explanation
+0,False,0.0,3.54915837371331e-05,0.5,GRAD,False,Saliency_PTY'>
+1,False,0.0,4.0484705211979207e-05,0.5,GRAD,False,Saliency_PTY'>
+2,False,0.0,3.3315313687418125e-05,0.5,GRAD,False,Saliency_PTY'>
+3,False,0.0,4.169182667079681e-05,0.5,GRAD,False,Saliency_PTY'>
+4,False,0.0,4.509804732919709e-05,0.5,GRAD,False,Saliency_PTY'>
+5,False,0.0,4.408942737997205e-05,0.5,GRAD,False,Saliency_PTY'>
+6,False,0.0,4.442023782115991e-05,0.5,GRAD,False,Saliency_PTY'>
+7,False,0.0,4.073823989767428e-05,0.5,GRAD,False,Saliency_PTY'>
+8,False,0.0,5.62641221462522e-05,0.5,GRAD,False,Saliency_PTY'>
+9,False,0.0,4.703410380353368e-05,0.5,GRAD,False,Saliency_PTY'>
+10,False,0.0,5.48955532656691e-05,0.5,GRAD,False,Saliency_PTY'>
+11,False,0.0,5.05519991359817e-05,0.5,GRAD,False,Saliency_PTY'>
+12,False,0.0,4.3664650866968524e-05,0.5,GRAD,False,Saliency_PTY'>
+13,False,0.0,4.6617372920245375e-05,0.5,GRAD,False,Saliency_PTY'>
+14,False,0.0,4.3493174533640624e-05,0.5,GRAD,False,Saliency_PTY'>
+15,False,0.0,3.884094550830977e-05,0.5,GRAD,False,Saliency_PTY'>
+16,False,0.0,5.180432524459632e-05,0.5,GRAD,False,Saliency_PTY'>
+17,False,0.0,5.140207672883271e-05,0.5,GRAD,False,Saliency_PTY'>
+18,False,0.0,4.229428570527038e-05,0.5,GRAD,False,Saliency_PTY'>
+19,False,0.0,5.4604014013133875e-05,0.5,GRAD,False,Saliency_PTY'>
