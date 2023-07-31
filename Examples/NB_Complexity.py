@@ -24,13 +24,13 @@ train_dataset = UCRDataset(train_x.astype(np.float64),train_y.astype(np.int64))
 test_dataset = UCRDataset(test_x.astype(np.float64),test_y.astype(np.int64))
 train_loader = torch.utils.data.DataLoader(train_dataset,batch_size=16,shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_dataset,batch_size=1,shuffle=False)
-if os.path.isfile('temp_lstm'):
+if os.path.isfile('./Examples/temp_lstm'):
     model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
-    model = torch.load( 'temp_lstm')
+    model = torch.load( './Examples/temp_lstm')
 else:
     model =LSTM(1, 10 ,n_pred_classes,rnndropout=0.1).to('cpu') 
     fit(model,train_loader,test_loader)
-    torch.save(model, 'temp_lstm')
+    torch.save(model, './Examples/temp_lstm')
 model.eval()
 # For use with CNN set mode ='feat'
 explainer =  [Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True),TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
