@@ -1,2 +1,0 @@
-,AverageSensitivity_mean,MaxSensitivity_mean,AverageSensitivity_std,MaxSensitivity_std,method,tsr,Datasets,Typ,Generation,models
-0,,,,,GRAD,True,SimulatedTrainingData_Middle_NARMA_F_50_TS_50.npy,Middle,NARMA,LSTM
