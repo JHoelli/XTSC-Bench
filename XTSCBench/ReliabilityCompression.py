@@ -29,13 +29,6 @@ class Compression ():
         super().__init__()
         self.models=mlmodel
         self.explainers=explainer
-        #TODO 
-
-        self.metrics=metrics
-
-        #TODO IS THIS removable ? 
-        self.data=data
-        self.columns=[]
 
     def evaluate():
         raise NotImplementedError("For the Synthetic Data Based Ground Truth Evaluation, only evaluate_synthtic is implemented!.")
@@ -162,7 +155,7 @@ class Compression ():
                         if elementwise is not None:
                             if not os.path.isdir(f'{elementwise}/degenerate'):
                                 os.mkdir(f'{elementwise}/degenerate')
-                            pd.DataFrame(zip(recall,precision,masked_acc),columns=['Recall','Precision','ACC']).to_csv(f'{elementwise}/degenerate/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv')
+                            pd.DataFrame(zip(recall,precision,masked_acc),columns=['Recall','Precision','ACC']).to_csv(f'{elementwise}/compression/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv')
                         
                         
                         row_summary=pd.DataFrame([[modelName,typ,generation,m,AUP,AUR,AUPR,AUC]],columns=SummaryTableCol)
