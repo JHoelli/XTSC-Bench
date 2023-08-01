@@ -34,6 +34,6 @@ else:
 model.eval()
 # For use with CNN set mode ='feat'
 explainer =  [Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True),TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
-bm=ComplexityEvaluation(explainer=explainer, metrics= [EffectiveComplexity])
+bm=ComplexityEvaluation(explainer=explainer, metrics= [EffectiveComplexity()])
 #tems,label,model, exp='None', mode='time', aggregate=False
 print(bm.evaluate(test_x[0:2], np.argmax(test_y[0:2],axis=1),model, mode='time',aggregate=True))

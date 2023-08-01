@@ -15,7 +15,7 @@ def complexity(mod,data,label, res,exp):
 
 def quantus_complexity_wrapper(metric, mod,data,label, res,exp):
     #TODO Add KWARGS Possibility
-    return  metric(disable_warnings=True)( model=mod,  x_batch=data,y_batch=label, a_batch=res, device='cpu',explain_func=exp)
+    return  metric( model=mod,  x_batch=data,y_batch=label, a_batch=res, device='cpu',explain_func=exp)
 
 
 def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
