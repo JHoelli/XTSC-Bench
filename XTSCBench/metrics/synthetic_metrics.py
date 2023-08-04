@@ -410,18 +410,6 @@ def get_reference_samples(metadata,raw_testing,shapes):
     
 
     return referencesSamples
-
-def get_quantus_metrics(meta, sal,data,label,mod,*shape):
-
-    masks=get_reference_samples(meta,data,shape)
-                
-    #sal=np.array(sal).reshape(data.shape[0],*shape)
-    #data=np.array(data).reshape(data.shape[0],*shape)
-    masks.reshape(sal.shape)
-    pointing=quantus.PointingGame()(model=mod,x_batch=data, y_batch=label,  a_batch=sal, s_batch=masks, device='CPU')
-    rank=quantus.RelevanceRankAccuracy()(model=mod,x_batch=data, y_batch=label,  a_batch=sal, s_batch=masks, device='CPU')
-    Auc=quantus.AUC()(model=mod,x_batch=data, y_batch=label,  a_batch=sal, s_batch=masks, device='CPU')
-    return pd.DataFrame([pointing,rank, Auc],columns=["Poinint", "Relevance Rank","AuC"])
     
 
 def get_precision_recall_plain(sal,raw_testing,metadata,shapes, tolerance=0):

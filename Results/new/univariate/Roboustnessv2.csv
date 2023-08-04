@@ -1,4 +1,0 @@
-,AverageSensitivity_mean,MaxSensitivity_mean,AverageSensitivity_std,MaxSensitivity_std,nb_neighbors,transform_name,segmentator_name,learning_process_name,nb_interpretable_feature,explanation_size,Datasets,Typ,Generation,models,transformer,epochs
-0,0.0008063690202137911,0.0013032767192216017,0.0005660806619080381,0.0005573763458990084,1000,random,uniform,Lime,10,1,SimulatedTrainingData_Moving_RareTime_PseudoPeriodic_F_1_TS_50.npy,RareTime,PseudoPeriodic,LSTM,,
-1,0.5040032247682713,0.5940298784895198,0.14237995665333678,0.16305625972308999,,,,,,,SimulatedTrainingData_RareTime_AutoRegressive_F_1_TS_50.npy,RareTime,AutoRegressive,CNN,authentic_opposing_information,100
-2,0.6295403547740703,0.7236273520623591,0.1670145779089083,0.19778433731241168,,,,,,,SimulatedTrainingData_RareTime_AutoRegressive_F_1_TS_50.npy,RareTime,AutoRegressive,LSTM,authentic_opposing_information,100
