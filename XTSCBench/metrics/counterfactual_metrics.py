@@ -13,8 +13,6 @@ from tslearn.clustering import TimeSeriesKMeans
 from scipy.spatial import distance
 import pickle
 from typing import List
-from deap import base
-from deap import creator
 import torch
 from XTSCBench.Evaluation import Evaluation
 from XTSCBench.metrics.synthetic_helper import load_synthetic_data, manipulate_exp_method

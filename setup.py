@@ -39,8 +39,11 @@ base_packages = [
     "scipy==1.11.1",
     "seaborn==0.12.2",
     "sklearn==0.0",
+    "torch",
     #"TSInterpret>0.3.0",
     "quantus==0.4.1",
+    "cachetools",
+    "tslearn"
     
 ]
 
