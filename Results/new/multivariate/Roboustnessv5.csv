@@ -1,0 +1,7 @@
+,AverageSensitivity_mean,MaxSensitivity_mean,AverageSensitivity_std,MaxSensitivity_std,method,tsr,Datasets,Typ,Generation,models,transformer,epochs
+0,0.2626853267783757,0.3570589974087244,0.08107979270647712,0.10416559790107756,FO,False,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,SmallMiddle,Harmonic,CNN,,
+1,0.1394872242992321,0.1796644571089905,0.03939318266957127,0.04769866962719731,FO,True,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,SmallMiddle,Harmonic,CNN,,
+2,0.6049774585382609,0.6147756713291772,0.06288277626784453,0.06353229603451233,,,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,SmallMiddle,Harmonic,LSTM,authentic_opposing_information,100
+3,0.46344307621900926,0.6562485628533439,0.070019843085848,0.11029443894838796,FO,False,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,SmallMiddle,Harmonic,LSTM,,
+4,0.11859057981878736,0.1684576912640033,0.050434823291867686,0.06488821853605903,FO,True,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,SmallMiddle,Harmonic,LSTM,,
+5,0.49137670471285483,0.5027805872835528,0.055762869400071136,0.05454703954780287,,,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,SmallMiddle,PseudoPeriodic,LSTM,authentic_opposing_information,100
