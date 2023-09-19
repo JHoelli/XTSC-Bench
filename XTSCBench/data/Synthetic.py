@@ -1,7 +1,12 @@
 import numpy as np 
 from XTSCBench.metrics.synthetic_metrics import generateNewSample
-# generateNewSample(dataGenerationProcess, sampler="irregular", NumTimeSteps=50, NumFeatures=50)
+import os
+
 class Synthtic():
+    '''
+    
+    
+    '''
     def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimesteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
                  impTimeSteps=[30,14,30,15,6,6, 40,40,20,20],impFeatures=[1,1,1,1,1,1,1,1,1,1],
                  startImpTimeSteps=[10,18,10,18,22,22,5,5,None,None ], startImpFeatures=[0,0,0,0,0,0,0,0,0,0],
@@ -91,8 +96,19 @@ class Synthtic():
 
 
         if self.data_dir is not None:
-            #TODO Generate necessary folders
             print("Saving Datasets...")
+            if not os.Path.isdir(self.data_dir+"Training"):
+                os.mkdir(self.data_dir+"Training")
+            if not os.Path.isdir(self.data_dir+"Training/data"):
+                os.mkdir(self.data_dir+"Training/data")
+            if not os.Path.isdir(self.data_dir+"Training/meta"):
+                os.mkdir(self.data_dir+"Training/meta")
+            if not os.Path.isdir(self.data_dir+"Testing"):
+                os.mkdir(self.data_dir+"Testing")
+            if not os.Path.isdir(self.data_dir+"Testing/data"):
+                os.mkdir(self.data_dir+"Testing/data")
+            if not os.Path.isdir(self.data_dir+"Testing/meta"):
+                os.mkdir(self.data_dir+"Testing/meta")
             np.save(self.data_dir+"Training/data/SimulatedTrainingData_"+ instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TrainingDataset)
             np.save(self.data_dir+"Training/meta/SimulatedTrainingMetaData_"+instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TrainingDataset_MetaData)
 
@@ -128,7 +144,6 @@ class Synthtic():
                 TargetFeat_Starts[i]=TargetXStart
 
                 TargetYEnd,TargetXEnd = TargetYStart+instance.ImpTimeSteps, TargetXStart+instance.ImpFeatures
-                #TODO create Sample from Synthtic data
                 sample =self.createSample(instance,1,TargetYStart,TargetYEnd,TargetXStart,TargetXEnd)
                 if(Targets[i]==-1):
                     Targets[i]=0
