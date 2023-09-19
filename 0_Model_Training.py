@@ -124,7 +124,7 @@ for i in ['univariate','multivariate']: #['univariate']
             print(f'CNN  {train_x_2}')
             model = ResNetBaseline(in_channels=train_x_2, num_pred_classes=n_pred_classes)
             train_dataset = UCRDataset(np.swapaxes(train_x,-2,-1).astype(np.float64),train_y.astype(np.int64))
-            test_dataset = UCRDataset(np.swapaxes(test_x,-1,-1).astype(np.float64).reshape(-1,train_x_2,train_x_1),test_y.astype(np.int64))
+            test_dataset = UCRDataset(np.swapaxes(test_x,-2,-1).astype(np.float64),test_y.astype(np.int64))
             train_loader = torch.utils.data.DataLoader(train_dataset,batch_size=16,shuffle=True)
             test_loader = torch.utils.data.DataLoader(test_dataset,batch_size=1,shuffle=False)
 
