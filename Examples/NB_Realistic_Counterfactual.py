@@ -4,8 +4,7 @@ from TSInterpret.InterpretabilityModels.counterfactual.TSEvoCF import TSEvo
 import torch 
 from XTSCBench.ClassificationModels.CNN_T import ResNetBaseline, UCRDataset,fit
 from XTSCBench.ClassificationModels.LSTM import LSTM
-from XTSCBench.ComplexityEvaluation import ComplexityEvaluation
-from quantus.metrics.complexity.effective_complexity import EffectiveComplexity
+from XTSCBench.CounterfactualEvaluation import CounterfactualEvaluation
 from tslearn.datasets import UCR_UEA_datasets
 import sklearn
 import numpy as np 
@@ -33,7 +32,7 @@ else:
     torch.save(model, './Examples/temp_lstm')
 model.eval()
 # For use with CNN set mode ='feat'
-explainer =  [Saliency_PTY(model, 140,1, method='GRAD', mode='time', tsr=True),TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
-bm=ComplexityEvaluation(explainer=explainer, metrics= [EffectiveComplexity()])
+explainer =  [TSEvo(model= model,data=(train_x,train_y), mode = 'time',backend='PYT',epochs=10)]
+bm=CounterfactualEvaluation(explainer=explainer)
 #tems,label,model, exp='None', mode='time', aggregate=False
 print(bm.evaluate(test_x[0:2], np.argmax(test_y[0:2],axis=1),model, mode='time',aggregate=True))

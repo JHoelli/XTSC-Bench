@@ -1,5 +1,6 @@
 import numpy as np 
-
+from XTSCBench.metrics.synthetic_metrics import generateNewSample
+# generateNewSample(dataGenerationProcess, sampler="irregular", NumTimeSteps=50, NumFeatures=50)
 class Synthtic():
     def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimesteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
                  impTimeSteps=[30,14,30,15,6,6, 40,40,20,20],impFeatures=[1,1,1,1,1,1,1,1,1,1],
@@ -98,6 +99,11 @@ class Synthtic():
             np.save(self.data_dir+"Testing/data/SimulatedTestingData_"+instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TestingDataset)
             np.save(self.data_dir+"Testing/meta/SimulatedTestingMetaData_"+instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TestingDataset_MetaData)
     
+    def createSample(self, instance,Target,start_ImpTS,end_ImpTS,start_ImpFeat,end_ImpFeat):
+        sample=generateNewSample(instance.dataGenerationProcess, sampler="irregular", NumTimeSteps=self.NumTimesteps, NumFeatures=self.NumFeatures)
+        sample[start_ImpTS:end_ImpTS,start_ImpFeat:end_ImpFeat]=sample[start_ImpTS:end_ImpTS,start_ImpFeat:end_ImpFeat]+Target
+        return sample
+    
     def createPositionalDataset(self,NumberOFsamples, instance):
         DataSet = np.zeros((NumberOFsamples ,self.NumTimeSteps , self.NumFeatures  ))
         metaData= np.zeros((NumberOFsamples,5))
@@ -123,7 +129,7 @@ class Synthtic():
 
                 TargetYEnd,TargetXEnd = TargetYStart+instance.ImpTimeSteps, TargetXStart+instance.ImpFeatures
                 #TODO create Sample from Synthtic data
-                sample = createSample(instance,1,TargetYStart,TargetYEnd,TargetXStart,TargetXEnd)
+                sample =self.createSample(instance,1,TargetYStart,TargetYEnd,TargetXStart,TargetXEnd)
                 if(Targets[i]==-1):
                     Targets[i]=0
 
@@ -150,7 +156,7 @@ class Synthtic():
 
                 TargetYEnd,TargetXEnd = TargetYStart+instance.ImpTimeSteps, TargetXStart+instance.ImpFeatures
                 #TODO create Sample from Synthtic data
-                sample = createSample(args,1,TargetYStart,TargetYEnd,TargetXStart,TargetXEnd)
+                sample = self.createSample(instance,1,TargetYStart,TargetYEnd,TargetXStart,TargetXEnd)
                 if(Targets[i]==-1):
                     Targets[i]=0
 
@@ -160,8 +166,6 @@ class Synthtic():
 
 
                 DataSet[i,:,:,]=sample
-
-
 
 
         #Label
@@ -208,7 +212,7 @@ class Synthtic():
                 Targets[i]=1
 
             TargetTS_Ends[i],TargetFeat_Ends[i] = TargetTS_Starts[i]+instance.ImpTimeSteps, TargetFeat_Starts[i]+instance.ImpFeatures
-            sample = createSample(args,Targets[i],int(TargetTS_Starts[i]),int(TargetTS_Ends[i]),int(TargetFeat_Starts[i]),int(TargetFeat_Ends[i]))
+            sample = self.createSample(instance,Targets[i],int(TargetTS_Starts[i]),int(TargetTS_Ends[i]),int(TargetFeat_Starts[i]),int(TargetFeat_Ends[i]))
 
             if(Targets[i]==-1):
                 Targets[i]=0

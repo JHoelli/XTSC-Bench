@@ -26,40 +26,71 @@ class CounterfactualEvaluation(Evaluation):
     Calculates the L0, L1, L2, and L-infty distance measures.
     """
 
-    def __init__(self, mlmodel,explainer,data=None):
-        super().__init__(mlmodel)
+    def __init__(self, mlmodel=None,explainer=None,data=None):
+        #super().__init__(mlmodel)
         self.models=mlmodel
         self.explainers=explainer
         self.columns = ["d1", "d2", "d3", "d4","yNN Time", "Redundancy"]
         self.data=data
-
-    def evaluate(self, X=None,Y=None,exp=None):
+    #items,label,model, expla=None, mode='time', aggregate=False
+    def evaluate(self,items,label,model, expla=None, mode='time', aggregate=False):
         '''
         If Both are None Fallback on Synthetic
         '''
-        SummaryTable=pd.DataFrame(columns=self.columns)
-        y_pred=[]
-        X_train,y_train=self.data
-        for model in self.models: 
-            for explainer in self.explainers:
-                res=[]
-                if exp is None:
-                    for x,y in zip(X,Y):
-                        x =torch.from_numpy(x).float().reshape(1,x.shape[-2],x.shape[-1])
-                        pred= model(x).detach().numpy()
-                        # Manipulate Explainer
-                        explainer.model=model
-                        # Call Explainer
-                        counterfactual,label_cf=explainer.explain(x.detach().numpy(),np.array([np.argmax(pred[0])]),mode=explainer.mode)
-                        y_pred.append(label_cf)
-                        res.append(counterfactual)
-                else: 
-                    #TODO 
-                    pass 
-                distances = get_counterfactual_metrics(np.array(X), np.array(res),mlmodel=model,labels=y_pred,data=self.data)
-                row_summary=pd.DataFrame(distances,columns=self.columns)
+        '''
+        Enables evaluation on custom model, expalainer and data.
+        Attributes:
+            items np.array: items to be used in the evaluation
+            label np.array: Labels of items 
+            model torch.nn.Module:
+            exp np.array: Defaults to None, If Explanation is already calculated
+            mode str: first dimension 'time' or 'feat'
+            aggregate bool: Return mean and std 
+        Returns: 
+            pd.DataFrame
+        '''
+        row_summary=None
+        SummaryTable = pd.DataFrame([])
+        data_shape_1= items.shape[-2]
+        data_shape_2= items.shape[-1]
+        
+        for baseline in self.explainers:    
+            exp=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model,mode)
+            exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
+            row_summary= get_counterfactual_metrics(items,exp,model,label,data=None,y=None,mode='time')
+            #get_complexity_metrics(items,exp,model,label,baseline,mode=mode, additional_metrics=self.metrics)
+            if not aggregate:
+                df=parameters_to_pandas(baseline)
+                newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
+                newdf.columns = df.columns
+                newdf['explanation'] =np.repeat(str(type(baseline)).split('.')[-1], len(newdf), axis=0)
+                new_row_summary = pd.concat([row_summary,newdf], axis = 1)
+            if aggregate:
+                means = row_summary.mean().add_suffix('_mean')
+                std = row_summary.std().add_suffix('_std')
+                new= pd.concat([means,std]).to_frame().T
+                new_row_summary=pd.concat([new,parameters_to_pandas(baseline)], axis = 1)
+ 
+            if len(SummaryTable)== 0:
+                SummaryTable=new_row_summary
+            else:
+                SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True)
 
-                SummaryTable= pd.concat([row_summary,SummaryTable],ignore_index=True)
+        if expla is not None: 
+            row_summary= get_counterfactual_metrics(items,exp,model,label,data=None,y=None,mode='time')
+            if not aggregate:
+                newdf=pd.DataFrame([])
+                newdf['explanation'] =np.repeat('custom', len(row_summary), axis=0)
+                new_row_summary = pd.concat([row_summary,newdf], axis = 1)
+            if aggregate:
+                means = row_summary.mean().add_suffix('_mean')
+                std = row_summary.std().add_suffix('_std')
+                new_row_summary= pd.concat([means,std]).to_frame().T
+                new_row_summary['explanation']= ['custom']
+            if len(SummaryTable)== 0:
+                SummaryTable=new_row_summary
+            else:
+                SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True) 
         return SummaryTable
  
     def evaluate_synthetic(self,types, classificator, data_dir, num_items=100,save=None,elementwise=None, explanation_path=None):
@@ -135,7 +166,7 @@ class CounterfactualEvaluation(Evaluation):
                             
                             for x,y in zip(data[:num_items],label[:num_items]):
                                 if 'CNN' in str(type(mod)):
-                                    x =torch.from_numpy(x).float().reshape(1,shape_2,shape_1)
+                                    x =torch.from_numpy(np.swapaxes(x,-2,-1)).float().reshape(1,shape_2,shape_1)
                                 else: 
                                     x =torch.from_numpy(x).float().reshape(1,shape_1,shape_2)
                                 pred= mod(x).detach().numpy()
@@ -174,32 +205,3 @@ class CounterfactualEvaluation(Evaluation):
                         else: 
                             SummaryTable.to_csv(f'{save}')
                         #print(row_summary)
-
-    def plot_boxplot_results(self,from_file='./Results/full_CF/elementwise', columns=None,figsize=(30,30),path=None):
-        
-        plt.close()
-        #BUILD DATA FRAME
-        for file in os.list_dir():
-            data = pd.read_csv(from_file).drop(columns='Unnamed: 0')
-        if split_column == 'method':
-            '''Combine method with parameters'''
-            method_full = data['method']
-            for a in data.columns: 
-                if a not in self.SummaryTableCol:
-                    #print(a)
-                    #print(data[a])
-                    method_full += '_' + data[a].astype(str)
-        #fig = make_subplots(rows=1, cols=3,subplot_titles=['AUPR','AUP','AUR'])
-        fig, axes = plt.subplots(1, 3,figsize=figsize)
-        sns.boxplot(data=data, x="AUPR", y=f"{split_column}",ax=axes[0])
-        sns.boxplot(data=data, x="AUP", y=f"{split_column}",ax=axes[1])
-        sns.boxplot(data=data, x="AUR", y=f"{split_column}",ax=axes[2])
-        if path is not None:
-            plt.savefig(path)
-
-
-        pass
-
-    def table_Summary(self, from_file):
-        
-        pass
