@@ -48,12 +48,12 @@ class RobustnessEvaluation(Evaluation):
         data_shape_2= items.shape[-1]
         for baseline in self.explainers:    
             label = get_preds(model, items)
-            res=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
+            res=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model,mode)
             #if mode == 'feat':
             #    exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
             #else:
             #    exp=np.array(exp).reshape(-1, data_shape_2,data_shape_1)
-            row_summary=get_robustness_metrics(items,res,model,labels=label,explainer=baseline,mode='time', additional_metrics=None)
+            row_summary=get_robustness_metrics(items,res,model,labels=label,explainer=baseline,mode=mode, additional_metrics=None)
             #print(row_summary)
             if not aggregate:
                 df=parameters_to_pandas(baseline)

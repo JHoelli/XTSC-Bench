@@ -67,11 +67,7 @@ class ReliabilityEvaluation (Evaluation):
 
         if exp is not None: 
             row_summary= get_reliability_metrics(items, exp,model,label,meta,(data_shape_1,data_shape_2),synthtic=False, additional_metrics=self.metrics)
-            #get_complexity_metrics(items,exp,model,label,baseline,mode=mode)
             if not aggregate:
-                #df=parameters_to_pandas(baseline)
-                #newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
-                #newdf.columns = df.columns
                 newdf['explanation'] =np.repeat('custom', len(row_summary), axis=0)
                 new_row_summary = pd.concat([row_summary,newdf], axis = 1)
             if aggregate:
@@ -79,10 +75,7 @@ class ReliabilityEvaluation (Evaluation):
                 std = row_summary.std().add_suffix('_std')
                 new_row_summary= pd.concat([means,std]).to_frame().T
                 new_row_summary['explanation']=['custom']
-                #su =pd.DataFrame([[modelName,typ,generation,m]], columns=SummaryTableCol)
-                #new_row_summary=pd.concat([new,parameters_to_pandas('custom')], axis = 1)
-            SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True,axis=1)  
-        #print(SummaryTable)    
+            SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True,axis=1)     
         return SummaryTable
 
  
@@ -141,6 +134,10 @@ class ReliabilityEvaluation (Evaluation):
                 modelName =  name.replace('Testing','Training')
                 
                 for m in self.classification_models:
+                    if 'CNN' in str(type(m)):
+                        mode='feat'
+                    else:
+                        mode='time' 
                     for explainer in self.explainers:
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
                         '''Check wheather Calculation already exists'''
@@ -168,7 +165,7 @@ class ReliabilityEvaluation (Evaluation):
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
                         if explanation_path is None or f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
-                            res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod)
+                            res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod,mode)
                             #TODO add save
                             res=np.array(res)
                         else:                             

@@ -18,7 +18,7 @@ def syntheticBaseline(dataGenerationProcess, NumTimeSteps,NumFeatures, mode):
     sample= generateNewSample(dataGenerationProcess, sampler="irregular", NumTimeSteps= NumTimeSteps, NumFeatures=NumFeatures)
     #print('Sample', sample.shape)
     #if mode=='feat':
-    return sample.reshape( sample.shape[-1], sample.shape[-2])
+    return np.swapaxes(sample,-1,-2)#.reshape( sample.shape[-1], sample.shape[-2])
     #return sample
     
 
@@ -104,7 +104,7 @@ class model_wrapper(torch.nn.Module):
         super().__init__()
         self.model=model
     def forward(self,x):
-        x=x.reshape(-1,x.shape[-1],x.shape[-2])
+        x=np.swapaxes(x,-1,-2).reshape(-1,x.shape[-1],x.shape[-2])
         return self.model(x)
 
 
@@ -127,7 +127,7 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
         channel_first=False
         num_feat= original.shape[-1]
         num_time= original.shape[-2]
-        original=original.reshape(-1, num_feat,num_time)
+        original=np.swapaxes(original,-2,-1).reshape(-1, num_feat,num_time)
         exp=exp.reshape(-1, num_feat,num_time)
         mlmodel=model_wrapper(mlmodel)
         mlmodel.eval()
@@ -139,9 +139,7 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
     explainer=Quantus_Wrapper(explainer).make_callable
     df = pd.DataFrame([])
     if num_feat<2:
-        #TODO IF AS PARAM
         for a in ["uniform","mean"]:
-            #TODO Neighbor hood mean, neighbor hood min max
             try:
                 df[f'monoton_{a}']= np.array(monoton(mlmodel,original,labels, exp,explainer,perturb_baseline=a))
             except:
@@ -162,14 +160,10 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
             df[f'faithfulness_correlation_synthetic_flex']=  np.array(faithfulnessCorrelelation(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices,subset_size=subset_size))
         except:
             df[f'faithfulness_correlation_synthtic_flex']=  np.array(np.repeat(np.nan,len(original)))
-        #df[f'faithfulness_correlation_synthetic_flex']=  np.array(faithfulnessCorrelelation(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices,subset_size=subset_size))
 
     
     if additional_metrics is not None: 
         for add in additional_metrics:
             df[f'{str(type(add))}']= np.array(quantus_faithfulness_wapper(mlmodel,original,labels, exp,explainer))
-    #print(df)
-    #import sys 
-    #sys.exit(1)
 
     return df

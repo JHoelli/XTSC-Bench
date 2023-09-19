@@ -44,7 +44,7 @@ class FaithfulnessEvaluation(Evaluation):
         data_shape_2= items.shape[-1]
         
         for baseline in self.explainers:    
-            exp_n=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model)
+            exp_n=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model,mode)
             exp_n=np.array(exp_n).reshape(-1, data_shape_1,data_shape_2)
             row_summary= get_faithfullness_metrics(items,exp_n,model,label,baseline,mode=mode, generation_process=generation)
             if not aggregate:

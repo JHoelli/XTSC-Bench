@@ -59,7 +59,7 @@ def get_robustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mode
         channel_first=True
         num_feat= original.shape[-1]
         num_time= original.shape[-2]
-        original=original.reshape(-1, num_feat,num_time)
+        original=np.swapaxes(original,-1,-2).reshape(-1, num_feat,num_time)
         exp=exp.reshape(-1, num_feat,num_time)
         #mlmodel=model_wrapper(mlmodel)
         #mlmodel.eval()
