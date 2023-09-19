@@ -3,34 +3,60 @@ from XTSCBench.metrics.synthetic_metrics import generateNewSample
 import os
 
 class Synthetic():
-    '''
-    
-    
-    '''
+    """
+    Enables the generation of Synthtic data in correspondance to [1].
+    The code is largly inspired by https://github.com/ayaabdelsalam91/TS-Interpretability-Benchmark.
+
+    References
+    ----------
+     [1] Ismail, Aya Abdelsalam, et al. "Benchmarking deep learning interpretability in time series predictions."
+     Advances in neural information processing systems 33 (2020): 6441-6452.
+    ----------
+    """
+
     def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimeSteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
                  impTimeSteps=[30,14,30,15,6,6, 40,40,20,20],impFeatures=[1,1,1,1,1,1,1,1,1,1],
                  startImpTimeSteps=[10,18,10,18,22,22,5,5,None,None ], startImpFeatures=[0,0,0,0,0,0,0,0,0,0],
+                 loc1=[None,None,None,None,None,None,None,None,1,1],loc2=[None,None,None,None,None,None,None,None,29,29],
+                 freezeType = [None,None,None,None,None,None,None,None,"Feature","Time"], isMoving=[False,False,True,True,False,True,False,True,None,None],
+                isPositional=[False,False,False,False,False,False,False,False,True,True],
                  models= None) -> None:
+        '''
+        Arguments:
+            NumTrainingSamples int: Number of Training Example.
+            NumTestingSamples int: Number of Testing Samles.
+            NumFeatures int: Number of desired Features.
+            NumTimeSteps int: Number if desired Time Tesos
+            datasetsTypes array: Type of informative Feature. e.g., ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
+            impTimeSteps array: Time Steps to impute e.g., [30,14,30,15,6,6, 40,40,20,20]
+            impFeatures array, Features to impute , e.g., [1,1,1,1,1,1,1,1,1,1]
+            startImpTimeSteps array: Start Time Steps, e.g., [10,18,10,18,22,22,5,5,None,None ]
+            startImpFeatures array: Start Feat ,e.g., [0,0,0,0,0,0,0,0,0,0],
+            models array: This is still to do None
+        '''
         self.DatasetsTypes= datasetsTypes
         self.ImpTimeSteps=impTimeSteps
         self.ImpFeatures=impFeatures
         self.NumFeatures=NumFeatures
         self.NumTimeSteps=NumTimeSteps
-
         self.StartImpTimeSteps=startImpTimeSteps
         self.StartImpFeatures=startImpFeatures
         self.NumTrainingSamples=NumTrainingSamples
         self.NumTestingSamples=NumTestingSamples
-        self.Loc1=[None,None,None,None,None,None,None,None,1,1]
-        self.Loc2=[None,None,None,None,None,None,None,None,29,29]
-
-
-        self.FreezeType = [None,None,None,None,None,None,None,None,"Feature","Time"]
-        self.isMoving=[False,False,True,True,False,True,False,True,None,None]
-        self.isPositional=[False,False,False,False,False,False,False,False,True,True]
+        self.Loc1=loc1
+        self.Loc2=loc2
+        self.FreezeType = freezeType
+        self.isMoving=isMoving
+        self.isPositional=isPositional
         self.device = 'cpu'
         self.models=models
         self.DataGenerationTypes=dataGenerationTypes
+        lengths=[len(startImpFeatures),len(startImpTimeSteps),len(isMoving),len(isPositional),len(impTimeSteps), len(impFeatures), len(loc1),len(loc2), len(datasetsTypes)]
+        if not np.all(lengths) == len(datasetsTypes):
+            raise Exception("All arrays speciyfying the dataset Types need to have the same Length!") 
+
+
+
 
 
 
