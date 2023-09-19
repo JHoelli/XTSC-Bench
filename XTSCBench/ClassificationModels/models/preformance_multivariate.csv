@@ -178,4 +178,15 @@
 176,CNN,SimulatedTrainingData_SmallMiddle_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 177,LSTM,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,0.97,0.97,1.0,0.94,0.9716981132075472
 178,LSTM_ATT,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
-179,CNN,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,0.98,0.98,1.0,0.9591836734693877,0.9811320754716981
+179,CNN,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,0.98,0.98,1.0,0.9591836734693876,0.981132075471698
+180,CNN,SimulatedTrainingData_Middle_AutoRegressive_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+181,CNN,SimulatedTrainingData_Middle_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+182,CNN,SimulatedTrainingData_Middle_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+183,CNN,SimulatedTrainingData_Middle_Harmonic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+184,CNN,SimulatedTrainingData_Middle_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+185,CNN,SimulatedTrainingData_Middle_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+186,CNN,SimulatedTrainingData_Moving_Middle_AutoRegressive_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+187,CNN,SimulatedTrainingData_Moving_Middle_Box_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+188,CNN,SimulatedTrainingData_Moving_Middle_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+189,CNN,SimulatedTrainingData_Moving_Middle_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+190,CNN,SimulatedTrainingData_Moving_Middle_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
