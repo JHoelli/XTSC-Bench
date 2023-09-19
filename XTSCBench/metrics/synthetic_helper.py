@@ -142,7 +142,7 @@ def get_preds( mod, cfs):
         return all_preds
 
 
-def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod):
+def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode):
         '''
         Calculates the explanations for the given data. 
          Attributes: 
@@ -159,28 +159,20 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod):
         sal=[]
         for x1,y1 in zip(data,label):
             x1=np.array(x1)
-            if 'CNN' in str(type(mod)):
-                if 'counterfactual' in str(type(saliency)):
-                    x =torch.from_numpy(x1).float().reshape(1,data_shape_2,data_shape_1)
-                    pred= torch.nn.functional.softmax(mod(x)).detach().numpy()
-                    res,label_cf=saliency.explain(x.detach().numpy(),np.array([np.argmax(pred[0])]))
-                    if res is not None:
-                        res=res.reshape(-1,data_shape_2,data_shape_1)
+            if mode == 'feat':
+                x1=np.swapaxes(x1,-1,-2)
+                x =torch.from_numpy(x1).float().reshape(1,data_shape_2,data_shape_1)
+            else: 
+                x =torch.from_numpy(x1).float().reshape(1,data_shape_1,data_shape_2)
+            if 'counterfactual' in str(type(saliency)):
+                pred= torch.nn.functional.softmax(mod(x)).detach().numpy()
+                res,label_cf=saliency.explain(x.detach().numpy(),np.array([np.argmax(pred[0])]))
 
-                else:
-                    #TODO IS THIS CORRECT
-                    res=np.array(saliency.explain(x1.reshape(-1,data_shape_2,data_shape_1), int(y1))).reshape(-1,data_shape_2,data_shape_1)
+
             else:
-                if 'counterfactual' in str(type(saliency)):
-                    x =torch.from_numpy(x1).float().reshape(1,data_shape_1,data_shape_2)
-                    pred= torch.nn.functional.softmax(mod(x)).detach().numpy()
-                    res,label_cf=saliency.explain(x.detach().numpy(),np.array([np.argmax(pred[0])]))
-                    print(label_cf)
-                    print(np.array(res).shape)
-                    if res is not None:
-                        res= res.reshape(1,data_shape_1,data_shape_2)
-                else: 
-                    res=np.array(saliency.explain(x1.reshape(-1,data_shape_1,data_shape_2), int(y1))).reshape(-1,data_shape_1,data_shape_2)
+                res=np.array(saliency.explain(x, int(y1))).reshape(-1,data_shape_2,data_shape_1)
+            if mode=='feat':
+                res=np.swapaxes(np.array(res),-1,-2)
             if res is not None:
                 sal.append(res.tolist())
 
@@ -189,7 +181,6 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod):
                     sal.append(np.full((1,data_shape_2,data_shape_1), None).tolist())#np.ones_like(x1.reshape(data_shape_2,data_shape_1)))
                 else:
                     sal.append(np.full((1,data_shape_1,data_shape_2), None).tolist())#np.ones_like(x1.reshape(data_shape_1,data_shape_2)))
-        print(np.array(sal).shape)
         return sal
 
 

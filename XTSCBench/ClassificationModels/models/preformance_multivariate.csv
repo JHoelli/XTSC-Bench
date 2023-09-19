@@ -229,3 +229,13 @@
 227,CNN,SimulatedTrainingData_RareFeature_PseudoPeriodic_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 228,CNN,SimulatedTrainingData_RareTime_AutoRegressive_F_50_TS_50.npy,0.99,0.99,0.9772727272727272,1.0,0.9886363636363636
 229,CNN,SimulatedTrainingData_RareTime_Box_F_50_TS_50.npy,0.5,0.5,1.0,0.5,0.5
+230,CNN,SimulatedTrainingData_RareTime_CAR_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+231,CNN,SimulatedTrainingData_RareTime_Harmonic_F_50_TS_50.npy,0.43,0.4299999999999999,0.0,0.0,0.5
+232,CNN,SimulatedTrainingData_RareTime_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+233,CNN,SimulatedTrainingData_RareTime_PseudoPeriodic_F_50_TS_50.npy,0.51,0.51,0.0,0.0,0.5
+234,CNN,SimulatedTrainingData_SmallMiddle_AutoRegressive_F_50_TS_50.npy,0.55,0.55,1.0,0.55,0.5
+235,CNN,SimulatedTrainingData_SmallMiddle_Box_F_50_TS_50.npy,0.53,0.53,0.0,0.0,0.5
+236,CNN,SimulatedTrainingData_SmallMiddle_CAR_F_50_TS_50.npy,0.52,0.52,0.0,0.0,0.5
+237,CNN,SimulatedTrainingData_SmallMiddle_Harmonic_F_50_TS_50.npy,0.52,0.52,1.0,0.52,0.5
+238,CNN,SimulatedTrainingData_SmallMiddle_NARMA_F_50_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+239,CNN,SimulatedTrainingData_SmallMiddle_PseudoPeriodic_F_50_TS_50.npy,0.53,0.53,0.0,0.0,0.5
