@@ -27,6 +27,7 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
 
     exp= exp.astype(np.float64)
     if synthtic:
+        #TODO
         masks=get_reference_samples(meta,data,shape).reshape(data.shape[0],data.shape[2],data.shape[1])
     else:
         masks=meta
