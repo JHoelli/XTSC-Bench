@@ -207,9 +207,6 @@ def load_synthetic_data(keywords, univariate, return_train= False):
     meta_train={}
     label_train={}
 
-    l='multivariate'
-    if univariate:
-        l='univariate'
     for f in keywords: 
         for path in os.listdir(f'{univariate}/Testing/data'):
             if f in path:
