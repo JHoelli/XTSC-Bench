@@ -2,12 +2,12 @@ import numpy as np
 from XTSCBench.metrics.synthetic_metrics import generateNewSample
 import os
 
-class Synthtic():
+class Synthetic():
     '''
     
     
     '''
-    def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimesteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
+    def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimeSteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
                  impTimeSteps=[30,14,30,15,6,6, 40,40,20,20],impFeatures=[1,1,1,1,1,1,1,1,1,1],
                  startImpTimeSteps=[10,18,10,18,22,22,5,5,None,None ], startImpFeatures=[0,0,0,0,0,0,0,0,0,0],
                  models= None) -> None:
@@ -15,7 +15,7 @@ class Synthtic():
         self.ImpTimeSteps=impTimeSteps
         self.ImpFeatures=impFeatures
         self.NumFeatures=NumFeatures
-        self.NumTimesteps=NumTimesteps
+        self.NumTimeSteps=NumTimeSteps
 
         self.StartImpTimeSteps=startImpTimeSteps
         self.StartImpFeatures=startImpFeatures
@@ -38,7 +38,7 @@ class Synthtic():
     def createDatasets(self, datadir):
          self.data_dir=datadir
          for i in range(len(self.DatasetsTypes)):
-            instance=dict()
+            instance=Object()
 
             instance.ImpTimeSteps=self.ImpTimeSteps[i]
             instance.ImpFeatures=self.ImpFeatures[i]
@@ -59,7 +59,7 @@ class Synthtic():
                     instance.DataName=self.DatasetsTypes[i]+"_Box"
                 else:
                    instance. DataName=self.DatasetsTypes[i]+"_"+self.DataGenerationTypes[j]
-                instance.DataGenerationProcess=self.DataGenerationTypes[j]
+                instance.dataGenerationProcess=self.DataGenerationTypes[j]
 
                 self.createSimulationDataProcesses(instance)
 
@@ -97,17 +97,17 @@ class Synthtic():
 
         if self.data_dir is not None:
             print("Saving Datasets...")
-            if not os.Path.isdir(self.data_dir+"Training"):
+            if not os.path.isdir(self.data_dir+"Training"):
                 os.mkdir(self.data_dir+"Training")
-            if not os.Path.isdir(self.data_dir+"Training/data"):
+            if not os.path.isdir(self.data_dir+"Training/data"):
                 os.mkdir(self.data_dir+"Training/data")
-            if not os.Path.isdir(self.data_dir+"Training/meta"):
+            if not os.path.isdir(self.data_dir+"Training/meta"):
                 os.mkdir(self.data_dir+"Training/meta")
-            if not os.Path.isdir(self.data_dir+"Testing"):
+            if not os.path.isdir(self.data_dir+"Testing"):
                 os.mkdir(self.data_dir+"Testing")
-            if not os.Path.isdir(self.data_dir+"Testing/data"):
+            if not os.path.isdir(self.data_dir+"Testing/data"):
                 os.mkdir(self.data_dir+"Testing/data")
-            if not os.Path.isdir(self.data_dir+"Testing/meta"):
+            if not os.path.isdir(self.data_dir+"Testing/meta"):
                 os.mkdir(self.data_dir+"Testing/meta")
             np.save(self.data_dir+"Training/data/SimulatedTrainingData_"+ instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TrainingDataset)
             np.save(self.data_dir+"Training/meta/SimulatedTrainingMetaData_"+instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TrainingDataset_MetaData)
@@ -116,7 +116,7 @@ class Synthtic():
             np.save(self.data_dir+"Testing/meta/SimulatedTestingMetaData_"+instance.DataName+"_F_"+str(self.NumFeatures)+"_TS_"+str(self.NumTimeSteps),TestingDataset_MetaData)
     
     def createSample(self, instance,Target,start_ImpTS,end_ImpTS,start_ImpFeat,end_ImpFeat):
-        sample=generateNewSample(instance.dataGenerationProcess, sampler="irregular", NumTimeSteps=self.NumTimesteps, NumFeatures=self.NumFeatures)
+        sample=generateNewSample(instance.dataGenerationProcess, sampler="irregular", NumTimeSteps=self.NumTimeSteps, NumFeatures=self.NumFeatures)
         sample[start_ImpTS:end_ImpTS,start_ImpFeat:end_ImpFeat]=sample[start_ImpTS:end_ImpTS,start_ImpFeat:end_ImpFeat]+Target
         return sample
     
@@ -248,3 +248,6 @@ class Synthtic():
 
 
         return DataSet , metaData
+
+class Object(object):
+    pass
