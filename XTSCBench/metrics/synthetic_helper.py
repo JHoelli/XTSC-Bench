@@ -90,13 +90,10 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
             #d_train=data_train[name]
             d_train = d_train.reshape(d_train.shape[0],d_train.shape[1]*d_train.shape[2])
             d_train = scaler.transform(d_train)
+            d_train.reshape(d_train.shape[0],original_1,original_2) 
             if 'CNN' in str(type(mod)):
-                dataRNN_train = d_train.reshape(d_train.shape[0] ,original_2,original_1)
-                ##print(dataRNN_train.shape)
-                
-            else: 
-                dataRNN_train = d_train.reshape(d_train.shape[0],original_1,original_2) 
-                ##print(dataRNN_train.shape)
+                dataRNN_train = np.swapaxes(d_train,-1,-2)
+
             di_old=copy.deepcopy(di)                 
             di['data'] =(dataRNN_train,l_train.reshape(-1).astype(np.int64))
 
@@ -109,18 +106,12 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
             if equal and check_consist: 
                 print ("Prediction of Classifier is constant. --> Calculation not possible")
                 return "Prediction of Classifier is constant."
-                #raise Exception("Prediction of Classifier is constant.") 
 
-            ##print(di)
-            #print('Option1')
             saliency = type(saliency)(**di)     
-            #print('Option1')
-        except:
-            #print('Option 2')
-            saliency = type(saliency)(**di_old)
-            #print(di_old)
-            #print('Option 2')
 
+        except:
+
+            saliency = type(saliency)(**di_old)
        
         return saliency
 
