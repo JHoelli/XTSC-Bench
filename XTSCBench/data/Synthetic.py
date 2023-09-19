@@ -32,7 +32,7 @@ class Synthetic():
             impFeatures array, Features to impute , e.g., [1,1,1,1,1,1,1,1,1,1]
             startImpTimeSteps array: Start Time Steps, e.g., [10,18,10,18,22,22,5,5,None,None ]
             startImpFeatures array: Start Feat ,e.g., [0,0,0,0,0,0,0,0,0,0],
-            models array: This is still to do None
+            models array: This is still TODO None
         '''
         self.DatasetsTypes= datasetsTypes
         self.ImpTimeSteps=impTimeSteps

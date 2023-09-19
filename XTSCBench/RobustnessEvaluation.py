@@ -146,6 +146,10 @@ class RobustnessEvaluation(Evaluation):
                 modelName =  name.replace('Testing','Training')
                 
                 for m in self.classification_models:
+                    if 'CNN' in str(type(m)):
+                        mode='feat'
+                    else:
+                        mode='time' 
                     for explainer in self.explainers:
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
                         label=label_full[name][:num_items]
@@ -169,7 +173,7 @@ class RobustnessEvaluation(Evaluation):
                         s= str(type(explainer)).split('.')[-1].replace('>','')   
                         if explanation_path is None or not os.path.isfile(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv') :                          
 
-                            exp=get_explanation(data, label,shape_1, shape_2, explainer, mod)
+                            exp=get_explanation(data, label,shape_1, shape_2, explainer, mod,mode)
                             exp=np.array(exp)
                             if save_exp is not None:
                                 s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
@@ -189,19 +193,22 @@ class RobustnessEvaluation(Evaluation):
                             print('Exits')
                             continue
                         data_man=data
+                        res =np.array(res)           
+                        res=res[:num_items]
                         if 'CF' in str(type(explainer)):
                             res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label)
-                        res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label,cf_man=False)
+                        #print(label)
+                        else:
+                            res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label,cf_man=False)
                         if len(res)== 0:
                             continue
                        
-                        res =np.array(res)            
-                        res=res[:num_items]
+                       
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            data_man = data_man.reshape(-1,shape_2,shape_1)
-                            res=res.reshape(-1,shape_2,shape_1)
+                            data_man = np.swapaxes(data_man,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            res= np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
     
                         else:
                             mode='time'

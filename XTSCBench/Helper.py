@@ -7,8 +7,6 @@ def counterfactual_manipulator(exp,data, meta, data_shape_1,data_shape_2,scaler,
 
     tmp = np.where(np.isin(exp, [None]), np.nan,exp).astype(float)
     tmp_index=np.where(~np.isnan(tmp).all(axis=1))
-    #print(tmp_index)
-
     if len(tmp_index[0]) > 1:
         data=data[tmp_index[0]]
         if meta is not None:
