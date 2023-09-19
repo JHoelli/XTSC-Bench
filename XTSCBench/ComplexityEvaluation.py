@@ -135,6 +135,10 @@ class ComplexityEvaluation(Evaluation):
                 modelName =  name.replace('Testing','Training')
                 
                 for m in self.classification_models:
+                    if 'CNN' in str(type(m)):
+                        mode='feat'
+                    else:
+                        mode='time' 
                     for explainer in self.explainers:
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
 
@@ -158,7 +162,8 @@ class ComplexityEvaluation(Evaluation):
                         res=[]
                         s= str(type(explainer)).split('.')[-1].replace('>','')
                         if explanation_path is None or f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
-                            res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod)
+                            
+                            res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod,mode)
                             res=np.array(res)
                             if save_exp is not None:
                                 s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
@@ -179,8 +184,8 @@ class ComplexityEvaluation(Evaluation):
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            data = data.reshape(-1,shape_2,shape_1)
-                            res=res.reshape(-1,shape_2,shape_1)
+                            data = np.swapaxes(data,-1,-2).reshape(-1,shape_2,shape_1)
+                            res=np.swapaxes(res,-1,-2).reshape(-1,shape_2,shape_1)
                         else:
                             mode='time'
                             data = data.reshape(-1,shape_1,shape_2)

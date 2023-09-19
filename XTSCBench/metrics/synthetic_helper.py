@@ -167,10 +167,12 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode
             if 'counterfactual' in str(type(saliency)):
                 pred= torch.nn.functional.softmax(mod(x)).detach().numpy()
                 res,label_cf=saliency.explain(x.detach().numpy(),np.array([np.argmax(pred[0])]))
+                res= res.reshape(-1,res.shape[-2],res.shape[-1])
 
 
             else:
-                res=np.array(saliency.explain(x, int(y1))).reshape(-1,data_shape_2,data_shape_1)
+                res=np.array(saliency.explain(x, int(y1)))
+                res= res.reshape(-1,res.shape[-2],res.shape[-1])
             if mode=='feat':
                 res=np.swapaxes(np.array(res),-1,-2)
             if res is not None:
