@@ -106,3 +106,5 @@ More examples can be found in ./Examples.
 
 ## Replicating Paper Results
 The Scripts and original code used to obtain the results from the paper can be found in the branch [results](https://github.com/JHoelli/XTSC-Bench/tree/results).
+
+## Citation

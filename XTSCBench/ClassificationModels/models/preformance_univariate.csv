@@ -184,3 +184,10 @@
 182,CNN,SimulatedTrainingData_Middle_CAR_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 183,CNN,SimulatedTrainingData_Middle_Harmonic_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
 184,CNN,SimulatedTrainingData_Middle_NARMA_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+185,CNN,SimulatedTrainingData_Middle_PseudoPeriodic_F_1_TS_50.npy,1.0,1.0,1.0,1.0,1.0
+186,CNN,SimulatedTrainingData_Moving_Middle_AutoRegressive_F_1_TS_50.npy,0.51,0.51,1.0,0.51,0.5
+187,CNN,SimulatedTrainingData_Moving_Middle_Box_F_1_TS_50.npy,0.59,0.59,1.0,0.59,0.5
+188,CNN,SimulatedTrainingData_Moving_Middle_CAR_F_1_TS_50.npy,0.39,0.39,0.5,0.4262295081967213,0.3854166666666667
+189,CNN,SimulatedTrainingData_Moving_Middle_Harmonic_F_1_TS_50.npy,0.49,0.49,0.4107142857142857,0.5609756097560976,0.5008116883116882
+190,CNN,SimulatedTrainingData_Moving_Middle_PseudoPeriodic_F_1_TS_50.npy,0.49,0.49,0.0,0.0,0.5
+191,CNN,SimulatedTrainingData_Moving_RareFeature_AutoRegressive_F_1_TS_50.npy,0.47,0.47,0.3877551020408163,0.4523809523809524,0.4683873549419768
