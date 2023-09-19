@@ -105,29 +105,4 @@ Additional Parameters can be added to your liking in the `init`.
 More examples can be found in ./Examples. 
 
 ## Replicating Paper Results
-
-Note, that the gererated Results can be found in Detail in ./Results . Due to making the Results available, it is also possible to just run the Evaluation Scripts.
-To Regenerate the Results, Explanations and Classification Models, run the numbered Scripts in an ascending order. 
-```shell
-# Classification Model Training
-python 0_Model_Training.py
-
-# Generate the Explanations
-python 1_Run_Explanarions.py # This explicit step in not necerssary. Explanations can also be computed on the fly during evalautation
-
-
-# Evaluation Scripts
-python 2a_Faithfulness_Uni.py
-python 2b_Faithfulness_Multi.py
-python 3a_Robustness_Uni.py
-python 3b_Robustness_Multi.py
-python 4a_Reliability_Uni.py
-python 4b_Reliability_Multi.py
-python 5a_Complexity_Uni.py
-python 5b_Complexity_Multi.py
-
-#Replicate Paper Plots
-python 6_Eval_ploty.py
-
-
-```
+The Scripts and original code used to obtain the results from the paper can be found in the branch [results](https://github.com/JHoelli/XTSC-Bench/tree/results).

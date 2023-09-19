@@ -28,7 +28,7 @@ rnn=0.1
 hidden_size =10 
 n_pred_classes=2
 
-for i in ['multivariate']: #['univariate']
+for i in ['univariate','multivariate']: #['univariate']
     #XTSCBench/data/univariate/Training/data
     path= os.listdir(f'./XTSCBench/data/{i}/Training/data')
     for name in path: 
@@ -123,8 +123,8 @@ for i in ['multivariate']: #['univariate']
         if not os.path.isfile( f'./XTSCBench/ClassificationModels/models/CNN/{name}'):
             print(f'CNN  {train_x_2}')
             model = ResNetBaseline(in_channels=train_x_2, num_pred_classes=n_pred_classes)
-            train_dataset = UCRDataset(train_x.astype(np.float64).reshape(-1,train_x_2,train_x_1),train_y.astype(np.int64))
-            test_dataset = UCRDataset(test_x.astype(np.float64).reshape(-1,train_x_2,train_x_1),test_y.astype(np.int64))
+            train_dataset = UCRDataset(np.swapaxes(train_x,-2,-1).astype(np.float64),train_y.astype(np.int64))
+            test_dataset = UCRDataset(np.swapaxes(test_x,-1,-1).astype(np.float64).reshape(-1,train_x_2,train_x_1),test_y.astype(np.int64))
             train_loader = torch.utils.data.DataLoader(train_dataset,batch_size=16,shuffle=True)
             test_loader = torch.utils.data.DataLoader(test_dataset,batch_size=1,shuffle=False)
 
