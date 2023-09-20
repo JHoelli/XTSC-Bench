@@ -207,7 +207,7 @@ class RobustnessEvaluation(Evaluation):
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            data_man = np.swapaxes(data_man,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            #data_man = np.swapaxes(data_man,-1,-2)#.reshape(-1,shape_2,shape_1)
                             res= np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
     
                         else:

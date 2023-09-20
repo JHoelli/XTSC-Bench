@@ -125,6 +125,7 @@ class ComplexityEvaluation(Evaluation):
                 d_train=data_train[name]
                 l_train=label_train[name]
                 data=data_full[name][:num_items]
+                print('data',data.shape)
                 label=label_full[name][:num_items]
                 shape_1 = data.shape[1]
                 shape_2 = data.shape[2]
@@ -165,6 +166,7 @@ class ComplexityEvaluation(Evaluation):
                             
                             res=get_explanation(data[:num_items], label[:num_items], shape_1, shape_2, explainer, mod,mode)
                             res=np.array(res)
+                            print('RES', res.shape)
                             if save_exp is not None:
                                 s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
                                 with open(f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
@@ -175,17 +177,22 @@ class ComplexityEvaluation(Evaluation):
                                         print(len(res)) 
                         else:                             
                             res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)[:num_items]
+                            print('RES', res.shape)
                             if type(res)== str: 
                                 continue
                         if None in res: 
                             res,data,_,label=counterfactual_manipulator(res,data, meta=None, data_shape_1=shape_1,data_shape_2=shape_2,scaler=scaler, raw_data=None, scaling=True, labels=label,cf_man=False)
-
+                            print('AFTER CF', res.shape)
                             num_items=len(res)
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
+                            print('CVV', data.shape)
+                            print('CVV', res.shape)
                             data = np.swapaxes(data,-1,-2)#.reshape(-1,shape_2,shape_1)
                             res=np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            print('CVV2', data.shape)
+                            print('CVV2', res.shape)
                         else:
                             mode='time'
                             data = data.reshape(-1,shape_1,shape_2)

@@ -81,21 +81,18 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
             if 'NumFeatures' in di.keys():
                 di['NumFeatures']=data_shape_2
                 di['NumTimeSteps']=data_shape_1
-        #TODO This is more elegant than below, however currentl not working: if 'data' in di.keys():
-        try:
-        #if True:
-            #l_train=label_train[name]
-            original_1=d_train.shape[1]
-            original_2=d_train.shape[2]
-            #d_train=data_train[name]
-            d_train = d_train.reshape(d_train.shape[0],d_train.shape[1]*d_train.shape[2])
-            d_train = scaler.transform(d_train)
-            d_train.reshape(d_train.shape[0],original_1,original_2) 
-            if 'CNN' in str(type(mod)):
-                dataRNN_train = np.swapaxes(d_train,-1,-2)
+        d_train = d_train.reshape(d_train.shape[0],data_shape_1*data_shape_2)
+        d_train = scaler.transform(d_train)
+        d_train=d_train.reshape(d_train.shape[0],data_shape_1,data_shape_2) 
+        if 'CNN' in str(type(mod)):
+            dataRNN_train = np.swapaxes(d_train,-1,-2)
+            print('CNN', d_train.shape)
+            print('CNN2', dataRNN_train.shape)
 
-            di_old=copy.deepcopy(di)                 
+        di_old=copy.deepcopy(di)                 
+        try:
             di['data'] =(dataRNN_train,l_train.reshape(-1).astype(np.int64))
+            print('dataRNN',dataRNN_train.shape)
 
             '''  Test of Prediction'''
             item = torch.from_numpy(dataRNN_train)
@@ -152,7 +149,9 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode
             x1=np.array(x1)
             if mode == 'feat':
                 x1=np.swapaxes(x1,-1,-2)
+                print('x1',x1.shape)
                 x =torch.from_numpy(x1).float().reshape(1,data_shape_2,data_shape_1)
+                print('x',x.shape)
             else: 
                 x =torch.from_numpy(x1).float().reshape(1,data_shape_1,data_shape_2)
             if 'counterfactual' in str(type(saliency)):
@@ -223,8 +222,6 @@ def load_synthetic_data(keywords, univariate, return_train= False):
                     meta_train[path]=np.load(f'{univariate}/Training/meta/{p}', allow_pickle=True)
                     label_train[path]= meta_train[path][:,0]
                     meta_train[path] =meta_train[path]
-    #import sys 
-    #sys.exit(1)
     if not return_train:
         return data, meta, label
     else:
