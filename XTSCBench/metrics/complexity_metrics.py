@@ -22,8 +22,6 @@ def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode
     print('COMPLEXITY')
     print(original.shape)
     print(exp.shape)
-    import sys 
-    sys.exit(1)
     original= original.reshape(-1,1,original.shape[-2]*original.shape[-1])
     exp= exp.reshape(-1,1,exp.shape[-2]*exp.shape[-1])
 

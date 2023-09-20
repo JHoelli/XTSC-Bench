@@ -17,4 +17,4 @@ if __name__=='__main__':
 
     data_dir=['./XTSCBench/data/univariate']
     bm=ComplexityEvaluation(None,explainers,(None,[0]))
-    print(bm.evaluate_synthetic( '_',['CNN'], data_dir[0],num_items=2,save='./Results/multivariate/Complexityv1.csv',elementwise='./Results/multivariate/elementwise',explanation_path='./Results/Explanation/'))
+    print(bm.evaluate_synthetic( 'SimulatedTestingData_Middle_AutoRegressive_F_1_TS_50',['CNN','LSTM'], data_dir[0],num_items=2,save='./Results/multivariate/Complexityv1.csv',elementwise='./Results/multivariate/elementwise',explanation_path='./Results/Explanation/'))
