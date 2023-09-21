@@ -51,7 +51,7 @@ def does_entry_already_exist(old_data, m, generation, typ, modelName):
                         return True
     return False
 
-def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, saliency, mod, check_consist=True):
+def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, saliency, mod, check_consist=False):
         '''
         Manipulate Dict Key of Explanation Instance for current iteration 
         Attributes: 
@@ -84,25 +84,28 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
         d_train = d_train.reshape(d_train.shape[0],data_shape_1*data_shape_2)
         d_train = scaler.transform(d_train)
         d_train=d_train.reshape(d_train.shape[0],data_shape_1,data_shape_2) 
+        dataRNN_train=d_train
         if 'CNN' in str(type(mod)):
             dataRNN_train = np.swapaxes(d_train,-1,-2)
             print('CNN', d_train.shape)
             print('CNN2', dataRNN_train.shape)
 
-        di_old=copy.deepcopy(di)                 
+        di_old=copy.deepcopy(di)
+
+        '''  Test of Prediction'''
+        item = torch.from_numpy(dataRNN_train)
+        out = mod(item.float())
+        y_pred = torch.nn.functional.softmax(out).detach().numpy()
+        y_pred = np.argmax(y_pred, axis=1)
+        equal=  all(element == y_pred[0] for element in y_pred)
+        if equal and check_consist: 
+            print ("Prediction of Classifier is constant. --> Calculation not possible")
+            return "Prediction of Classifier is constant."                 
         try:
             di['data'] =(dataRNN_train,l_train.reshape(-1).astype(np.int64))
             print('dataRNN',dataRNN_train.shape)
 
-            '''  Test of Prediction'''
-            item = torch.from_numpy(dataRNN_train)
-            out = mod(item.float())
-            y_pred = torch.nn.functional.softmax(out).detach().numpy()
-            y_pred = np.argmax(y_pred, axis=1)
-            equal=  all(element == y_pred[0] for element in y_pred)
-            if equal and check_consist: 
-                print ("Prediction of Classifier is constant. --> Calculation not possible")
-                return "Prediction of Classifier is constant."
+            
 
             saliency = type(saliency)(**di)     
 

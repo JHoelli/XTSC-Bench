@@ -1,9 +1,7 @@
 import quantus
 import numpy as np
-import torch
 import pandas as pd
 from XTSCBench.metrics.metrics_helper import Quantus_Wrapper
-from XTSCBench.Plots.Plot import plot_one_example
 
 
 def complexity(mod,data,label, res,exp):
@@ -20,9 +18,6 @@ def quantus_complexity_wrapper(metric, mod,data,label, res,exp):
 
 
 def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
-    print('COMPLEXITY')
-    print(original.shape)
-    print(exp.shape)
     original= original.reshape(-1,1,original.shape[-2]*original.shape[-1])
     exp= exp.reshape(-1,1,exp.shape[-2]*exp.shape[-1])
     
@@ -37,6 +32,6 @@ def get_complexity_metrics( original,exp,mlmodel,labels=None,explainer=None,mode
         for add in additional_metrics:
             #metric, mod,data,label, res,exp)
             df[f'{str(add)}']= np.array(quantus_complexity_wrapper(add,mlmodel,original,labels, exp,explainer))
-    plot_one_example(original,exp, value=df['complexity'][0])
+    #plot_one_example(original,exp, value=df['complexity'][0])
 
     return df
