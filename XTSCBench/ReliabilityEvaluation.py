@@ -181,8 +181,8 @@ class ReliabilityEvaluation (Evaluation):
                         num_items=len(res)
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            data = np.swapaxes(data,-1,-2)#.reshape(-1,shape_2,shape_1)
-                            #res=np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            #data = np.swapaxes(data,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            res=np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
                         #else:
                         #    mode='time'
                         #    data = data.reshape(-1,data_shape_1,data_shape_2)
