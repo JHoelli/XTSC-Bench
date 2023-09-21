@@ -4,7 +4,7 @@ import torch
 import pandas as pd
 from XTSCBench.metrics.metrics_helper import Quantus_Wrapper
 from XTSCBench.metrics.synthetic_metrics import get_reference_samples
-
+from XTSCBench.Plots.Plot import plot_one_example,plot_one_example_with_meta#(original,exp,reference_sample, value=None)
 
 
 
@@ -59,6 +59,7 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
     df['Relevance Rank']=rank
     df['Relevance Mass']=rank_mass
     df['AuC']=Auc
+    plot_one_example_with_meta(data,exp,masks, value=f'{Auc} , {str(meta[0])}')
     return df
    
     
