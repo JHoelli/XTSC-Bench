@@ -127,7 +127,6 @@ class ReliabilityEvaluation (Evaluation):
                 data_shape_2 = data.shape[2]
                 meta=meta_full[name]
 
-                raw_data=np.copy(data)[:num_items]
                 data, test_loaderRNN, scaler = scaling(data, label,  data_shape_1,  data_shape_2)
                 d_train, train_loaderRNN, scaler = scaling(d_train, l_train,  data_shape_1,  data_shape_2)
 
@@ -140,9 +139,6 @@ class ReliabilityEvaluation (Evaluation):
                         mode='time' 
                     for explainer in self.explainers:
                         print(f'RUN {number}/{total} data {name}, model {m}, salienymethod {str(type(explainer))}, params {parameters_to_pandas(explainer)}')
-                        '''Check wheather Calculation already exists'''
-                        if does_entry_already_exist(old_data, m, generation, typ, modelName):
-                            continue  
                        
                         '''Check wheather Calculation already exists'''
                         if does_entry_already_exist(old_data, m, generation, typ, modelName):
@@ -150,12 +146,12 @@ class ReliabilityEvaluation (Evaluation):
                             continue  
                         '''Load Model and Manipulate Explainer'''
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
-                        old_explainer = explainer
+                        #old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, data_shape_1, data_shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
-                            #TODO add Log?
-                            print('Predictor returns constant predictoe')
+                            print('Predictor returns constant predictor')
+                            number +=1
                             continue      
                         
                         '''Calculate Explanations'''
@@ -166,19 +162,36 @@ class ReliabilityEvaluation (Evaluation):
                         s= str(type(explainer)).split('.')[-1].replace('>','')
                         if explanation_path is None or f'{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv' not in os.listdir(explanation_path):
                             res=get_explanation(data[:num_items], label[:num_items], data_shape_1, data_shape_2, explainer, mod,mode)
-                            #TODO add save
                             res=np.array(res)
+                            if save_exp is not None:
+                                s= str(type(explainer)).split('.')[-1].replace('>','')#TODO Used to be '\n'
+                                with open(f'{explanation_path}/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv', 'wb') as f:
+                                    try:
+                                        np.save(f,np.array(res))
+                                    except: 
+                                        print(res)
+                                        print(len(res)) 
                         else:                             
                             res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)[:num_items]
+                            if type(res)== str: 
+                                continue
                         if None in res: 
                             res,data,meta,label=counterfactual_manipulator(res,data, meta=meta, data_shape_1=data_shape_1,data_shape_2=data_shape_2,scaler=scaler, raw_data=None, scaling=True, labels=label,cf_man=False)
 
-                            num_items=len(res)
-                        exp=res
+                        num_items=len(res)
+                        if 'CNN' in str(type(mod)):
+                            mode='feat'
+                            data = np.swapaxes(data,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            #res=np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
+                        #else:
+                        #    mode='time'
+                        #    data = data.reshape(-1,data_shape_1,data_shape_2)
+                        #res=res.reshape(-1,data_shape_1,data_shape_2)
+                        exp=res.reshape(-1,res.shape[-2],res.shape[-1])
                         if len(exp)== 0:
                             continue
-                        exp=np.array(exp).reshape(-1,data_shape_1,data_shape_2)[:num_items]                  
-                        distances = get_reliability_metrics(data[:num_items], exp[:num_items],mod,label[:num_items],meta[:num_items],(data_shape_1,data_shape_2))
+                        exp=np.array(exp)[:num_items]                  
+                        distances = get_reliability_metrics(data[:num_items], exp[:num_items],mod,label[:num_items],meta[:num_items],(data_shape_1,data_shape_2), mode= mode)
  
                         number =number+1
 

@@ -169,13 +169,14 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode
             if mode=='feat':
                 res=np.swapaxes(np.array(res),-1,-2)
             if res is not None:
-                sal.append(res.tolist())
+                sal.append(res.tolist()[0])
 
             else:
                 if 'CNN' in str(type(mod)):
-                    sal.append(np.full((1,data_shape_2,data_shape_1), None).tolist())#np.ones_like(x1.reshape(data_shape_2,data_shape_1)))
+                    sal.append(np.full((1,data_shape_2,data_shape_1)[0], None).tolist())#np.ones_like(x1.reshape(data_shape_2,data_shape_1)))
                 else:
-                    sal.append(np.full((1,data_shape_1,data_shape_2), None).tolist())#np.ones_like(x1.reshape(data_shape_1,data_shape_2)))
+                    sal.append(np.full((1,data_shape_1,data_shape_2)[0], None).tolist())#np.ones_like(x1.reshape(data_shape_1,data_shape_2)))
+        print('SAL', np.array(sal).shape)
         return sal
 
 

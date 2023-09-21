@@ -149,7 +149,7 @@ class ComplexityEvaluation(Evaluation):
                             continue  
                         '''Load Model and Manipulate Explainer'''
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')
-                        old_explainer = explainer
+                        #old_explainer = explainer
                         explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod)
 
                         if type(explainer) ==str: 
@@ -187,12 +187,8 @@ class ComplexityEvaluation(Evaluation):
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            #print('CVV', data.shape)
-                            #print('CVV', res.shape)
                             data = np.swapaxes(data,-1,-2)#.reshape(-1,shape_2,shape_1)
                             res=np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
-                            #print('CVV2', data.shape)
-                            #print('CVV2', res.shape)
                         else:
                             mode='time'
                             data = data.reshape(-1,shape_1,shape_2)

@@ -15,6 +15,6 @@ if __name__=='__main__':
     
 
 
-    data_dir=['./XTSCBench/data/multivariate']
+    data_dir=['./XTSCBench/data/univariate']
     bm=ReliabilityEvaluation(None,explainers,(None,[0]))
     print(bm.evaluate_synthetic( [''],['CNN','LSTM'], data_dir[0],num_items=2,save='./Results/multivariate/Reliabilityv2.csv',elementwise='./Results/multivariate/elementwise/',explanation_path='./Results/Explanation/'))
