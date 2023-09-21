@@ -397,16 +397,18 @@ def get_ground_truth_mask(raw_testing,metadata, shapes):
     #recall.append(overallRecall)
     #return precision, recall
 
-def get_reference_samples(metadata,raw_testing,shapes):
+def get_reference_samples(metadata,raw_testing,mode='feat'):
     TestingLabel=metadata[:,0]
     TargetTS_Starts=metadata[:,1]
     TargetTS_Ends=metadata[:,2]
     TargetFeat_Starts= metadata[:,3]
     TargetFeat_Ends= metadata[:,4]
-    referencesSamples=np.zeros((raw_testing.shape[0],shapes[0],shapes[1]))
+    raw_testing=np.array(raw_testing)
+    referencesSamples=np.zeros((raw_testing.shape[0],raw_testing.shape[1],raw_testing.shape[2]))
     for i in range(TestingLabel.shape[0]):
-
+     
         referencesSamples[i,int(TargetTS_Starts[i]):int(TargetTS_Ends[i]),int(TargetFeat_Starts[i]):int(TargetFeat_Ends[i])]=1
+
     
 
     return referencesSamples

@@ -31,9 +31,11 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
     if synthtic:
         #TODO
         masks=get_reference_samples(meta,data,shape)#.reshape(data.shape[0],data.shape[2],data.shape[1])
+        print('Mode',mode)
         if mode =='feat':
             masks=np.swapaxes(masks, -1,-2)
         print('masks ',masks.shape)
+        print(masks)
     else:
         masks=meta
 

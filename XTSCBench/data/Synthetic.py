@@ -2,6 +2,8 @@ import numpy as np
 from XTSCBench.metrics.synthetic_metrics import generateNewSample
 import os
 
+#TODO Check Feat ! in META 
+
 class Synthetic():
     """
     Enables the generation of Synthtic data in correspondance to [1].
