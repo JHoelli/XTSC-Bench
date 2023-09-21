@@ -44,16 +44,20 @@ def plot_one_example_with_meta(original,exp,reference_sample, value=None):
                 yticklabels=False,
                 vmin=0,
                 vmax=1,
+                 cbar=False
             )
     sns.lineplot(
-                x=range(0, len(item[0][0].reshape(-1))),
-                y=item[0][0].flatten(),
+                x=range(0, len(item[0].reshape(-1))),
+                y=item[0].flatten(),
                 ax=axn012,
                 color="white",
 
             )
+    axs[0].set(ylabel='E(x)')
+    axs[0].set(xticklabels=[])
+    axs[0].set(yticklabels=[])
     sns.heatmap(
-                reference_sample.reshape(1, -1),
+                reference_sample[0].reshape(1, -1),
                 fmt="g",
                 cbar=False,
                 cmap="viridis",
@@ -62,9 +66,7 @@ def plot_one_example_with_meta(original,exp,reference_sample, value=None):
                 vmin=0,
                 vmax=1,
             )
-    axs[0].set(ylabel='E(x)')
-    axs[0].set(xticklabels=[])
-    axs[0].set(yticklabels=[])
+
     axs[-1].set(ylabel='GT')
     axs[-1].set(xticklabels=[])
     axs[-1].set(yticklabels=[])

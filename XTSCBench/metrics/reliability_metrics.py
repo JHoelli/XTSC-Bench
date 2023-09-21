@@ -59,7 +59,7 @@ def get_reliability_metrics( data,exp,mlmodel,labels,meta, shape, mode='time', a
     df['Relevance Rank']=rank
     df['Relevance Mass']=rank_mass
     df['AuC']=Auc
-    plot_one_example_with_meta(data,exp,masks, value=f'{Auc} , {str(meta[0])}')
+    #plot_one_example_with_meta(data,exp,masks, value=f'{Auc} , {str(meta[0])}')
     return df
    
     
