@@ -71,7 +71,6 @@ class RobustnessEvaluation(Evaluation):
                 SummaryTable=new_row_summary
             else:
                 SummaryTable= pd.concat([new_row_summary,SummaryTable],ignore_index=True) 
-        print('exp2', exp)
         if exp is not None: 
             if explainer is None: 
                   raise Exception("Roboustness also needs an Explainer. Although an explanation has already be given, please provide the explainer in the method call, as the Roboustness Metrics calls the explanation function.") 
@@ -186,7 +185,7 @@ class RobustnessEvaluation(Evaluation):
                             res=exp
                         else:                             
                             res=np.load(f'./Results/Explanation/{name}_{m}_{s}_{str(parameters_to_pandas(explainer).values)}.csv',allow_pickle=True)
-                            if type(res)== str: 
+                            if type(res)== str:
                                 number+=1
                                 continue
                         if os.path.isfile(f'{elementwise}/Robustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv'):
@@ -197,7 +196,6 @@ class RobustnessEvaluation(Evaluation):
                         res=res[:num_items]
                         if 'CF' in str(type(explainer)):
                             res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label)
-                        #print(label)
                         else:
                             res, data_man, _, label= counterfactual_manipulator(res,data, None, shape_1,shape_2,scaler,raw_data,scaling=True,labels=label,cf_man=False)
                         if len(res)== 0:
@@ -207,8 +205,7 @@ class RobustnessEvaluation(Evaluation):
 
                         if 'CNN' in str(type(mod)):
                             mode='feat'
-                            #data_man = np.swapaxes(data_man,-1,-2)#.reshape(-1,shape_2,shape_1)
-                            res= np.swapaxes(res,-1,-2)#.reshape(-1,shape_2,shape_1)
+                            res= np.swapaxes(res,-1,-2)
     
                         else:
                             mode='time'
@@ -216,6 +213,7 @@ class RobustnessEvaluation(Evaluation):
                             res=res.reshape(-1,1,shape_1,shape_2)
 
                         label=label.astype(int)
+
                         row_summary=get_robustness_metrics(data_man[:num_items],res[:num_items],mod,label[:num_items],explainer,mode=mode)
 
 
@@ -227,15 +225,13 @@ class RobustnessEvaluation(Evaluation):
                             newdf['explanation'] =np.repeat(str(type(explainer)).split('.')[-1], len(newdf), axis=0)
                             distances_man = pd.concat([row_summary,newdf], axis = 1)
                             distances_man.to_csv(f'{elementwise}/Robustness/{name}_{m}_{str(parameters_to_pandas(explainer).values)}.csv')
-                        #print(distances_man.head())
                       
 
                         means = row_summary.mean().add_suffix('_mean')
                         std = row_summary.std().add_suffix('_std')
 
                         su =pd.DataFrame([[modelName,typ,generation,m]], columns=SummaryTableCol)
-                        new= pd.concat([means,std]).to_frame().T#pd.concat([means, std],axis=1).T
-                        #print(new)
+                        new= pd.concat([means,std]).to_frame().T
                         new_row_summary=pd.concat([new,parameters_to_pandas(explainer)], axis = 1)
                         new_row_summary= pd.concat([new_row_summary, su], axis = 1)
 
@@ -250,6 +246,6 @@ class RobustnessEvaluation(Evaluation):
                         else: 
                             SummaryTable.to_csv(f'{save}')
         return SummaryTable
-                        #print(row_summary)
+
 
     

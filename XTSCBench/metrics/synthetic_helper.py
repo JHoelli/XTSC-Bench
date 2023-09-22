@@ -152,9 +152,7 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode
             x1=np.array(x1)
             if mode == 'feat':
                 x1=np.swapaxes(x1,-1,-2)
-                print('x1',x1.shape)
                 x =torch.from_numpy(x1).float().reshape(1,data_shape_2,data_shape_1)
-                print('x',x.shape)
             else: 
                 x =torch.from_numpy(x1).float().reshape(1,data_shape_1,data_shape_2)
             if 'counterfactual' in str(type(saliency)):
@@ -176,7 +174,6 @@ def get_explanation( data, label, data_shape_1, data_shape_2, saliency, mod,mode
                     sal.append(np.full((1,data_shape_2,data_shape_1)[0], None).tolist())#np.ones_like(x1.reshape(data_shape_2,data_shape_1)))
                 else:
                     sal.append(np.full((1,data_shape_1,data_shape_2)[0], None).tolist())#np.ones_like(x1.reshape(data_shape_1,data_shape_2)))
-        print('SAL', np.array(sal).shape)
         return sal
 
 

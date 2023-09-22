@@ -31,4 +31,5 @@ def counterfactual_manipulator(exp,data, meta, data_shape_1,data_shape_2,scaler,
         exp_man = exp.reshape(-1,data_shape_1*data_shape_2)-raw_data_scaled.reshape(-1,data_shape_1*data_shape_2)
         exp_man = pre.MinMaxScaler().fit_transform(exp_man)
         exp=exp_man.reshape(-1,data_shape_1,data_shape_2)
+    exp= exp.reshape(-1,data_shape_1,data_shape_2)
     return exp, data, meta,labels

@@ -21,9 +21,6 @@ def AverageSensitivity(mod,data,label, res, exp,channel_first):
     '''
     measures the average sensitivity of an explanation using a Monte Carlo sampling-based approximation 
     '''
-    #print('LABEL ',label)
-    #print('Res ',res)
-    #print('DATA ', data)
 
     metric = quantus.AvgSensitivity(nr_samples=20,lower_bound=0.2, perturb_func=quantus.uniform_noise, similarity_func=quantus.difference,disable_warnings=True)
 
@@ -42,8 +39,8 @@ class model_wrapper(torch.nn.Module):
         super().__init__()
         self.model=model
     def forward(self,x):
-        print(x.shape)
-        x=x.reshape(-1,x.shape[-1],x.shape[-2])
+        shape=x.shape
+        x=np.swapaxes(x,-1,-2).reshape(-1,shape[-1],shape[-2])
         return self.model(x)
 
 
@@ -52,33 +49,18 @@ def get_robustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mode
     #TODO Put in CORRECT MODE
     exp= np.array(exp)
     original=np.array(original)
-    #print('Relevant SHapes')
-    #print(exp.shape)
-    #print(original.shape)
+    channel_first=True
     if mode== 'time': #and not synthetic:
-        channel_first=True
+        
         num_feat= original.shape[-1]
         num_time= original.shape[-2]
-        original=np.swapaxes(original,-1,-2).reshape(-1, num_feat,num_time)
-        exp=exp.reshape(-1, num_feat,num_time)
-        #mlmodel=model_wrapper(mlmodel)
-        #mlmodel.eval()
-    else: 
-        channel_first=True
-        num_feat= original.shape[-2]
-        num_time= original.shape[-1]
-    #labels=labels.astype(int)
+        original=np.swapaxes(original,-1,-2)
+        exp=np.swapaxes(exp,-1,-2)
+
     explainer=Quantus_Wrapper(explainer, mode).make_callable
     df = pd.DataFrame([])
-    #print('Labels ', labels)
-    #try:
     df['AverageSensitivity']=np.array(AverageSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
-    #except: 
-    #    df['AverageSensitivity']= np.array(np.repeat(np.nan,len(original)))
-    #try:
     df['MaxSensitivity']=np.array(MaxSensitivity(mlmodel,original,labels, exp,explainer,channel_first))
-    #except: 
-    #     df['MaxSensitivity']=np.array(np.repeat(np.nan,len(original)))
     
     if additional_metrics is not None: 
         for add in additional_metrics:
