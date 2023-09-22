@@ -1,17 +1,16 @@
 # XTSC-Bench: A Benchmarking Tool for Time Series Explanation Alorithms 
 
-XTSC-Bench is a python package to faciliate the benchmarking of explanation algorithms of Time Series Classifiers. The intention is to provide a tool to the research community to enable an easy evaluation of newly develped algorithms and therby encouraging progess in this research area. XTSC-Bench consists of synthetic data with ground truth and already trained models for a standardize evaluation, as well as metrics to measuere the performance of the evaluated Approaches. The Core Metric is thereby provided by [Quantos](https://github.com/understandable-machine-intelligence-lab/Quantus). XTSC-Bench provides helper function as well as metric adaptions to Quantos to make the metrics useable on TSC explainers. 
+XTSC-Bench is a python package to faciliate the benchmarking of explanation algorithms of Time Series Classifiers. The intention is to provide a tool to the research community to enable an easy evaluation of newly develped algorithms and therby encouraging progess in this research area. XTSC-Bench consists of synthetic data with ground truth and already trained models for a standardize evaluation, as well as metrics to measuere the performance of the evaluated Approaches. The Core Metric is thereby provided by [Quantus](https://github.com/understandable-machine-intelligence-lab/Quantus). XTSC-Bench provides helper function as well as metric adaptions to Quantos to make the metrics useable on TSC explainers. 
 Further, it is compatible with TSInterpret and provides therefore easy access to baselines. 
 
 
 ## Installation
 Clone the Github Repository for full availability of the Synthetic Datasets. 
 ```
-git clone [TO BE SPECIFIED]
+git clone https://github.com/JHoelli/XTSC-Bench.git
 ```
 
-Install the Benchmarking tool by using pip. (In Future, we will also make the Tool available via pip.)
-
+Install the Benchmarking tool by using pip.
 ```
 pip install .
 ```
