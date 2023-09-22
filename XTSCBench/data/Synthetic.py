@@ -2,7 +2,7 @@ import numpy as np
 from XTSCBench.metrics.synthetic_metrics import generateNewSample
 import os
 
-#TODO Check Feat ! in META 
+
 
 class Synthetic():
     """
