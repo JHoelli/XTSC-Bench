@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler,MinMaxScaler
 import torch.utils.data as data_utils
 import copy
 from torch.utils.data import DataLoader
+import warnings
 
 
 def scaling(data, label, data_shape_1, data_shape_2):
@@ -99,7 +100,8 @@ def manipulate_exp_method( d_train, l_train, data_shape_1, data_shape_2,scaler, 
         y_pred = np.argmax(y_pred, axis=1)
         equal=  all(element == y_pred[0] for element in y_pred)
         if equal and check_consist: 
-            print ("Prediction of Classifier is constant. --> Calculation not possible")
+            warnings.warn("No results are returned for constant predictors.")
+
             return "Prediction of Classifier is constant."                 
         try:
             di['data'] =(dataRNN_train,l_train.reshape(-1).astype(np.int64))

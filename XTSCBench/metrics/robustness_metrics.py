@@ -46,14 +46,13 @@ class model_wrapper(torch.nn.Module):
 
 
 def get_robustness_metrics( original,exp,mlmodel,labels=None,explainer=None,mode='time', additional_metrics=None):
-    #TODO Put in CORRECT MODE
+    print('Robustness Shapes')
+    print(original.shape)
+    print(exp.shape)
     exp= np.array(exp)
     original=np.array(original)
     channel_first=True
     if mode== 'time': #and not synthetic:
-        
-        num_feat= original.shape[-1]
-        num_time= original.shape[-2]
         original=np.swapaxes(original,-1,-2)
         exp=np.swapaxes(exp,-1,-2)
 

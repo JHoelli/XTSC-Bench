@@ -49,12 +49,7 @@ class RobustnessEvaluation(Evaluation):
         for baseline in self.explainers:    
             label = get_preds(model, items)
             res=get_explanation(items, label, data_shape_1, data_shape_2, baseline, model,mode)
-            #if mode == 'feat':
-            #    exp=np.array(exp).reshape(-1, data_shape_1,data_shape_2)
-            #else:
-            #    exp=np.array(exp).reshape(-1, data_shape_2,data_shape_1)
             row_summary=get_robustness_metrics(items,res,model,labels=label,explainer=baseline,mode=mode, additional_metrics=None)
-            #print(row_summary)
             if not aggregate:
                 df=parameters_to_pandas(baseline)
                 newdf = pd.DataFrame(np.repeat(df.values, len(row_summary), axis=0))
@@ -159,7 +154,7 @@ class RobustnessEvaluation(Evaluation):
                             continue  
                         '''Load Model and Manipulate Explainer'''
                         mod= torch.load(f'./XTSCBench/ClassificationModels/models/{m}/{modelName}',map_location='cpu')  
-                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=False)
+                        explainer = manipulate_exp_method(d_train, l_train, shape_1, shape_2, scaler, explainer, mod, check_consist=True)
 
                         if type(explainer) ==str: 
                             print('Predictor returns constant predictor')
@@ -206,6 +201,7 @@ class RobustnessEvaluation(Evaluation):
                         if 'CNN' in str(type(mod)):
                             mode='feat'
                             res= np.swapaxes(res,-1,-2)
+                            data_man= np.swapaxes(data_man,-1,-2)
     
                         else:
                             mode='time'

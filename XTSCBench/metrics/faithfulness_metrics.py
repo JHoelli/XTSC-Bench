@@ -122,9 +122,11 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
         additional_metrics:
         generation_process:
     '''
+    print('GET METRICS')
+    print('Original',original.shape)
+    print('EXP',exp.shape)
 
     if mode== 'time':
-        channel_first=False
         num_feat= original.shape[-1]
         num_time= original.shape[-2]
         original=np.swapaxes(original,-2,-1).reshape(-1, num_feat,num_time)
@@ -132,7 +134,6 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
         mlmodel=model_wrapper(mlmodel)
         mlmodel.eval()
     else: 
-        channel_first=True
         num_feat= original.shape[-2]
         num_time= original.shape[-1]
 
@@ -140,26 +141,26 @@ def get_faithfullness_metrics( original,exp,mlmodel,labels=None,explainer=None,m
     df = pd.DataFrame([])
     if num_feat<2:
         for a in ["uniform","mean"]:
-            try:
+            #try:
                 df[f'monoton_{a}']= np.array(monoton(mlmodel,original,labels, exp,explainer,perturb_baseline=a))
-            except:
-                df[f'monoton_{a}']=  np.array(np.repeat(np.nan,len(original)))
-            try:
+            #except:
+                #df[f'monoton_{a}']=  np.array(np.repeat(np.nan,len(original)))
+            #try:
                 df[f'faithfulness_correlation_{a}']=  np.array(faithfulnessCorrelelation(mlmodel,original,labels, exp,explainer,perturb_baseline=a, subset_size=subset_size))
-            except:
+            #except:
             
-                df[f'faithfulness_correlation_{a}']=  np.array(np.repeat(np.nan,len(original)))
+                #df[f'faithfulness_correlation_{a}']=  np.array(np.repeat(np.nan,len(original)))
         
     if generation_process is not None:
         baseline = syntheticBaseline(generation_process, num_time, num_feat, mode)
-        try:
-            df[f'monoton_synthetic']= np.array(monoton(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices))
-        except:
-            df[f'monoton_synthtic']=  np.array(np.repeat(np.nan,len(original)))
-        try:
-            df[f'faithfulness_correlation_synthetic_flex']=  np.array(faithfulnessCorrelelation(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices,subset_size=subset_size))
-        except:
-            df[f'faithfulness_correlation_synthtic_flex']=  np.array(np.repeat(np.nan,len(original)))
+        #try:
+        df[f'monoton_synthetic']= np.array(monoton(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices))
+        #except:
+         #   df[f'monoton_synthtic']=  np.array(np.repeat(np.nan,len(original)))
+        #try:
+        df[f'faithfulness_correlation_synthetic_flex']=  np.array(faithfulnessCorrelelation(mlmodel,original,labels, exp,explainer,baseline,baseline_replacement_by_indices,subset_size=subset_size))
+        #except:
+        #    df[f'faithfulness_correlation_synthtic_flex']=  np.array(np.repeat(np.nan,len(original)))
 
     
     if additional_metrics is not None: 
