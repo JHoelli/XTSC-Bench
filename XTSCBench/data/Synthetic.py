@@ -16,7 +16,7 @@ class Synthetic():
     ----------
     """
 
-    def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimeSteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
+    def __init__(self,NumTrainingSamples,NumTestingSamples, NumFeatures, NumTimeSteps, datasetsTypes= ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PositionalTime", "PositionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
                  impTimeSteps=[30,14,30,15,6,6, 40,40,20,20],impFeatures=[1,1,1,1,1,1,1,1,1,1],
                  startImpTimeSteps=[10,18,10,18,22,22,5,5,None,None ], startImpFeatures=[0,0,0,0,0,0,0,0,0,0],
                  loc1=[None,None,None,None,None,None,None,None,1,1],loc2=[None,None,None,None,None,None,None,None,29,29],
@@ -29,7 +29,7 @@ class Synthetic():
             NumTestingSamples int: Number of Testing Samles.
             NumFeatures int: Number of desired Features.
             NumTimeSteps int: Number if desired Time Tesos
-            datasetsTypes array: Type of informative Feature. e.g., ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PostionalTime", "PostionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
+            datasetsTypes array: Type of informative Feature. e.g., ["Middle", "SmallMiddle", "Moving_Middle", "Moving_SmallMiddle", "RareTime", "Moving_RareTime", "RareFeature","Moving_RareFeature","PositionalTime", "PositionalFeature"],dataGenerationTypes=[None ,"Harmonic", "PseudoPeriodic", "AutoRegressive" ,"CAR","NARMA" ], 
             impTimeSteps array: Time Steps to impute e.g., [30,14,30,15,6,6, 40,40,20,20]
             impFeatures array, Features to impute , e.g., [1,1,1,1,1,1,1,1,1,1]
             startImpTimeSteps array: Start Time Steps, e.g., [10,18,10,18,22,22,5,5,None,None ]
