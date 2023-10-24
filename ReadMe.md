@@ -107,3 +107,13 @@ More examples can be found in ./Examples.
 The Scripts and original code used to obtain the results from the paper can be found in the branch [results](https://github.com/JHoelli/XTSC-Bench/tree/results).
 
 ## Citation
+```
+@misc{höllig2023xtscbench,
+      title={XTSC-Bench: Quantitative Benchmarking for Explainers on Time Series Classification}, 
+      author={Jacqueline Höllig and Steffen Thoma and Florian Grimm},
+      year={2023},
+      eprint={2310.14957},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
